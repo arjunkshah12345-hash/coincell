@@ -56,6 +56,8 @@ def compute_gradcam(
 
 
 def overlay_gradcam(base_gray: np.ndarray, cam: np.ndarray, alpha: float = 0.45) -> np.ndarray:
+    h, w = base_gray.shape[:2]
+    cam = cv2.resize(cam, (w, h))
     u8 = (np.clip(base_gray, 0, 1) * 255).astype(np.uint8)
     rgb = cv2.cvtColor(u8, cv2.COLOR_GRAY2RGB)
     heat = cv2.applyColorMap((cam * 255).astype(np.uint8), cv2.COLORMAP_JET)

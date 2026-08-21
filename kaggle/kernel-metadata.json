@@ -1,0 +1,13 @@
+{
+  "id": "aks1321/coincell-train",
+  "title": "CoinCell Train CPU",
+  "code_file": "coincell_train.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": []
+}
