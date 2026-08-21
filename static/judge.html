@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoinCell — Judge Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    .judge-page { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .judge-page h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    .judge-page h2 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: #3b82f6; }
+    .judge-page p, .judge-page li { color: #8b95a8; line-height: 1.65; font-size: 0.9rem; }
+    .judge-page ul { padding-left: 1.25rem; margin: 0.5rem 0; }
+    .judge-page code { background: #1c2433; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+    .rubric { display: grid; gap: 0.75rem; margin: 1rem 0; }
+    .rubric-card { background: #141a24; border: 1px solid #2a3548; border-radius: 8px; padding: 1rem; }
+    .rubric-card strong { color: #e8ecf4; display: block; margin-bottom: 0.35rem; }
+    .back { display: inline-block; margin-bottom: 1rem; color: #3b82f6; text-decoration: none; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="judge-page">
+    <a href="/" class="back">← Back to CoinCell demo</a>
+    <h1>CoinCell — Judge Verification Guide</h1>
+    <p>Congressional App Challenge 2026 · Decision support for pediatric foreign-body X-rays</p>
+
+    <h2>60-second verification</h2>
+    <ol>
+      <li>Go to <a href="/" style="color:#3b82f6">homepage</a></li>
+      <li>Click <strong>Battery</strong> → CRITICAL verdict + protocol appears</li>
+      <li>Click <strong>Stacked coins</strong> → emergency flag despite ambiguous halo</li>
+      <li>Click <strong>Download clinical report</strong> → HTML report with overlays</li>
+    </ol>
+
+    <h2>Rubric mapping</h2>
+    <div class="rubric">
+      <div class="rubric-card">
+        <strong>1. Quality of idea</strong>
+        Reese's Law (P.L. 117-171) fixed battery packaging after pediatric deaths. CoinCell addresses the remaining diagnostic gap — distinguishing batteries from coins on X-ray within the 2-hour esophageal emergency window. Stacked coins mimic the double halo sign; this is a named, unsolved clinical failure mode.
+      </div>
+      <div class="rubric-card">
+        <strong>2. Implementation</strong>
+        Live web app with dual-image upload, probability visualization, Grad-CAM explainability, radial halo chart, clinical protocol engine, and downloadable HTML reports. Responsive dark-mode UI. Deployed on Hugging Face Spaces.
+      </div>
+      <div class="rubric-card">
+        <strong>3. Coding excellence</strong>
+        Ensemble of OpenCV radial halo profiling + DualViewNet (PyTorch) with battery-weighted loss. Source: GitHub. Tests: <code>python3 tests/smoke_test.py</code>. Architecture: <code>TECHNICAL.md</code>.
+      </div>
+    </div>
+
+    <h2>Key source files</h2>
+    <ul>
+      <li><code>coincell/halo_analyzer.py</code> — radial intensity profiling, Hough fallback</li>
+      <li><code>coincell/models.py</code> — DualViewNet AP+lateral fusion</li>
+      <li><code>coincell/inference.py</code> — ensemble + Grad-CAM + protocol</li>
+      <li><code>coincell/clinical.py</code> — CRITICAL/URGENT/ROUTINE engine</li>
+      <li><code>tests/smoke_test.py</code> — automated verification</li>
+    </ul>
+
+    <h2>Congressional connection</h2>
+    <p>
+      H.R. 5313 (117th Congress) passed the House 409–2 and became P.L. 117-171 (Reese's Law).
+      CoinCell implements the diagnostic tool that Congress's prevention legislation did not include.
+      Baseline comparison: Rostad et al., Emory SPR 2020 — 81% battery sensitivity, 88% overall accuracy; never deployed clinically.
+    </p>
+
+    <h2>Disclaimer</h2>
+    <p>Decision support / research demo only. Not a medical device. No patient data stored.</p>
+  </div>
+</body>
+</html>

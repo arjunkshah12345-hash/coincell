@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CoinCell — Battery vs Coin X-ray AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-icon">🩻</span>
+        <div>
+          <h1>CoinCell</h1>
+          <p class="tagline">AI for the diagnostic gap after Reese's Law</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="badge">P.L. 117-171</span>
+        <span class="badge badge-muted">Decision Support</span>
+        <a href="/static/judge.html" class="badge badge-muted" style="text-decoration:none;margin-left:0.5rem">For Judges</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel upload-panel">
+      <h2>Analyze X-ray</h2>
+      <p class="lead">Upload AP (required) and lateral (recommended). Dual-view fusion disambiguates stacked-coin false halos.</p>
+
+      <div class="dropzone" id="drop-ap" data-target="ap">
+        <input type="file" id="ap-input" accept="image/*" hidden />
+        <div class="dropzone-content">
+          <strong>AP (frontal) view</strong>
+          <span>Click or drag X-ray</span>
+        </div>
+        <img id="ap-preview" class="preview hidden" alt="AP preview" />
+      </div>
+
+      <div class="dropzone" id="drop-lat" data-target="lat">
+        <input type="file" id="lat-input" accept="image/*" hidden />
+        <div class="dropzone-content">
+          <strong>Lateral view</strong>
+          <span>Optional — improves accuracy</span>
+        </div>
+        <img id="lat-preview" class="preview hidden" alt="Lateral preview" />
+      </div>
+
+      <button id="analyze-btn" class="btn-primary" disabled>Analyze X-ray</button>
+
+      <div class="demo-row">
+        <span class="demo-label">Quick cases:</span>
+        <button class="btn-ghost" data-demo="battery">Battery</button>
+        <button class="btn-ghost" data-demo="coin">Coin</button>
+        <button class="btn-ghost" data-demo="stacked">Stacked coins</button>
+        <button class="btn-ghost" data-demo="normal">Normal</button>
+      </div>
+    </section>
+
+    <section class="panel results-panel hidden" id="results">
+      <div class="verdict" id="verdict">
+        <span class="verdict-label" id="verdict-text">—</span>
+        <span class="verdict-conf" id="verdict-conf"></span>
+      </div>
+
+      <div class="prob-bars">
+        <div class="prob-row">
+          <span>Battery</span>
+          <div class="bar-track"><div class="bar-fill bar-battery" id="bar-battery"></div></div>
+          <span id="pct-battery">—</span>
+        </div>
+        <div class="prob-row">
+          <span>Coin</span>
+          <div class="bar-track"><div class="bar-fill bar-coin" id="bar-coin"></div></div>
+          <span id="pct-coin">—</span>
+        </div>
+      </div>
+
+      <div class="scores">
+        <div class="score-chip">Halo <strong id="halo-score">—</strong></div>
+        <div class="score-chip">Step-off <strong id="stepoff-score">—</strong></div>
+        <div class="score-chip" id="dual-chip">Dual-view <strong id="dual-used">—</strong></div>
+      </div>
+
+      <p class="explanation" id="explanation"></p>
+
+      <div class="images-grid">
+        <figure><figcaption>Detection</figcaption><img id="img-overlay" alt="Overlay" /></figure>
+        <figure><figcaption>Grad-CAM</figcaption><img id="img-gradcam" alt="Grad-CAM" /></figure>
+        <figure><figcaption>Radial profile</figcaption><img id="img-radial" alt="Radial profile" /></figure>
+      </div>
+
+      <div class="protocol" id="protocol">
+        <h3 id="protocol-urgency">Clinical protocol</h3>
+        <p id="protocol-window" class="protocol-window"></p>
+        <ul id="protocol-actions"></ul>
+        <div class="contacts" id="protocol-contacts"></div>
+      </div>
+
+      <div class="result-actions">
+        <button id="download-report" class="btn-secondary hidden">Download clinical report</button>
+        <button id="share-verdict" class="btn-secondary hidden">Copy summary</button>
+      </div>
+    </section>
+
+    <aside class="panel info-panel">
+      <h2>Why CoinCell?</h2>
+      <blockquote>
+        Reese's Law fixed <em>prevention</em> — child-proof battery compartments. It didn't fix <em>diagnosis</em>.
+        When a disc appears on X-ray, clinicians have ~2 hours if it's a battery in the esophagus.
+      </blockquote>
+      <ul class="facts">
+        <li>Stacked coins mimic the double halo sign</li>
+        <li>Emory 2020 ML: 81% battery sensitivity — never shipped</li>
+        <li>CoinCell: CV halo + dual-view CNN fusion</li>
+      </ul>
+      <div class="metrics-box" id="metrics-box">
+        <h3>Benchmark <button id="refresh-metrics" class="btn-tiny" title="Refresh">↻</button></h3>
+        <div id="metrics-content">Loading…</div>
+      </div>
+
+      <details class="architecture">
+        <summary>Architecture (for judges)</summary>
+        <pre>AP X-ray → CLAHE → Halo analyzer (radial profile)
+Lateral  → Step-off detector
+Both     → DualViewNet fusion (battery-weighted loss)
+Ensemble → CV (55%) + CNN (40%) + dual bonus
+Output   → Verdict + Grad-CAM + clinical protocol</pre>
+      </details>
+      <p class="disclaimer">⚠️ Decision support only — not a medical device. Suspected ingestion → call 911.</p>
+    </aside>
+  </main>
+
+  <div class="loading hidden" id="loading">
+    <div class="spinner"></div>
+    <span>Running ensemble inference…</span>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+[project]
+name = "coincell"
+version = "2.1.0"
+description = "Button battery vs coin pediatric X-ray AI — Reese's Law diagnostic gap"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+[project.scripts]
+coincell = "app:main"
+
+[tool.setuptools.packages.find]
+include = ["coincell*", "api*"]

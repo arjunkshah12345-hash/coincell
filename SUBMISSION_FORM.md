@@ -1,0 +1,74 @@
+# CoinCell — Congressional App Challenge Submission Form
+## Copy-paste ready · October 26, 2026 deadline (12 PM Eastern)
+
+Fill at: https://www.congressionalappchallenge.us/
+
+---
+
+### App Name (40 characters max)
+```
+CoinCell
+```
+
+### Short Description (~150 characters — check portal limit)
+```
+AI decision support that distinguishes button batteries from coins on pediatric X-rays — closing the diagnostic gap Reese's Law left open.
+```
+
+### What is the purpose of your app? (one sentence)
+```
+CoinCell helps emergency clinicians distinguish ingested button batteries from coins on pediatric X-rays within the 2-hour esophageal emergency window.
+```
+
+### What inspired you to create this app?
+```
+In 2022, Congress passed Reese's Law (P.L. 117-171) nearly unanimously after children died from swallowing button batteries — it mandated child-proof battery packaging. But the law didn't fix what happens in the ER when a child has already swallowed something. On X-ray, batteries and coins look identical, and stacked coins mimic the "double halo sign." A 2020 Emory University study achieved 88% accuracy with machine learning but never became a clinical tool. I built CoinCell to ship what Congress's prevention law couldn't: the diagnosis.
+```
+
+### What is your app trying to accomplish?
+```
+CoinCell gives ER teams and tele-radiology a web-based decision support tool that fuses computer-vision halo analysis with a dual-view neural network to classify disc-shaped foreign bodies on pediatric X-rays. When the halo is ambiguous — the exact case where stacked coins fool doctors — CoinCell flags "treat as battery" and displays a clinical protocol with the 2-hour endoscopy window, action checklist, and emergency hotlines. The goal is zero missed batteries, even at rural hospitals without 24/7 pediatric radiology.
+```
+
+### What technical/coding difficulty did you encounter, and how did you overcome it?
+```
+The core difficulty is stacked coins creating false "double halo" patterns on AP X-rays — the same failure mode that limits human radiologists and prior ML papers. I solved this three ways: (1) a radial intensity profiler in OpenCV that quantifies the lucent inner ring unique to batteries, with Hough-circle fallback for low-contrast images; (2) a DualViewNet that fuses separate AP and lateral encoders, because lateral "step-off" morphology disambiguates batteries from stacked coins; and (3) an ensemble rule that flags ambiguous halos as emergencies regardless of coin probability, with battery-weighted loss (3×) so the CNN never optimizes for missing a battery. I also implemented Grad-CAM explainability so clinicians see what the model focuses on, and a clinical protocol engine that maps probability scores to CRITICAL/URGENT/ROUTINE action checklists. The full stack — FastAPI backend, PyTorch inference, downloadable HTML reports — deploys on Hugging Face Spaces with zero patient data stored.
+```
+
+---
+
+## Links to attach
+
+| Field | URL |
+|-------|-----|
+| **Live demo** | `https://huggingface.co/spaces/arjunkshah12345-hash/coincell` *(deploy first)* |
+| **Source code** | `https://github.com/arjunkshah12345-hash/coincell` |
+| **Demo video** | YouTube unlisted/public link *(record using VIDEO.md)* |
+
+---
+
+## Team
+
+- Max 4 students per team
+- One student creates profile + completes eligibility quiz first
+- All teammates need profiles before submission
+
+---
+
+## Before you submit — 60-second checklist
+
+- [ ] Live demo URL loads and Analyze works
+- [ ] GitHub repo is public; README matches claims
+- [ ] Video is 1:00–3:00 on YouTube (public or unlisted)
+- [ ] Video shows: problem → live app → one technical detail → impact
+- [ ] You mention **Reese's Law** and **P.L. 117-171** by name
+- [ ] Submission form technical answer mentions **stacked coins** + **dual-view fusion**
+- [ ] Tested on phone (judges may open demo on mobile)
+
+---
+
+## District
+
+Look up your Member of Congress: https://www.congressionalappchallenge.us/participants/find-your-district/
+
+*(Silicon Valley area is commonly CA-17 Ro Khanna — verify your home address zip.)*
