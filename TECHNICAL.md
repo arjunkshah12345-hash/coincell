@@ -50,16 +50,16 @@ Gradient-weighted Class Activation Mapping on the final conv block, target class
 
 Rule-based engine mapping probability + ambiguity → CRITICAL / URGENT / ROUTINE with action checklists and hotlines.
 
-## Training data
+## Training data & Kaggle pipeline
 
-Synthetic generator (`synthetic.py`) produces:
-- Battery AP (double halo)
-- Battery lateral (step-off rectangle)
-- Single coin (homogeneous disc)
-- **Stacked coins** (offset double disc — false halo mimic)
-- Normal chest (ribs, spine, noise)
+Synthetic generator (`synthetic.py`) — no PHI, no downloads. **All training on Kaggle GPU** via `kaggle/coincell_train.ipynb`:
 
-No PHI. No large downloads. Trains in `/tmp` on first boot (~2 min CPU).
+1. Clone repo to `/kaggle/working/` only
+2. Train DualViewNet (400 samples/class, 20 epochs, battery-weighted loss)
+3. Upload `coincell.pt` + `metrics.json` to Hugging Face Hub
+4. HF Spaces inference pulls weights — never trains locally
+
+See `kaggle/README.md`.
 
 ## Evaluation (`evaluate.py`)
 

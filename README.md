@@ -24,6 +24,8 @@ When a child swallows a disc-shaped object, ER teams must distinguish a **button
 | **CV halo analyzer** | Radial intensity profiling for double-halo sign |
 | **Grad-CAM explainability** | Shows what the model focuses on |
 | **Clinical protocol engine** | 2-hour window, action checklist, hotlines |
+| **Kaggle GPU training** | DualViewNet trained on Kaggle → weights on HF Hub |
+| **Inference-only deploy** | HF Spaces downloads weights — zero local training |
 | **Stacked-coin detection** | Flags ambiguous halos → treat as emergency |
 | **Benchmark vs Emory 2020** | Live `/api/metrics` comparison |
 | **Downloadable clinical report** | HTML report with overlays, protocol, hotlines |
@@ -46,7 +48,17 @@ Lateral ───► Step-off CV ────┤
 
 [![Tests](https://github.com/arjunkshah12345-hash/coincell/actions/workflows/test.yml/badge.svg)](https://github.com/arjunkshah12345-hash/coincell/actions)
 
-## Deploy live demo (required for submission)
+## Train on Kaggle (GPU)
+
+All model training runs on **Kaggle** — not your Mac.
+
+1. Upload `kaggle/coincell_train.ipynb` as a **new** Kaggle notebook
+2. GPU ON · Internet ON · Secret `HF_TOKEN`
+3. Run All → weights upload to `arjunkshah12345-hash/coincell-weights`
+
+Full guide: [`kaggle/README.md`](kaggle/README.md)
+
+## Deploy live demo (inference only)
 
 ```bash
 hf auth login

@@ -17,7 +17,13 @@
 
 ## You must do (blocks winning)
 
-### 1. Deploy live demo (~15 min)
+### 1. Train on Kaggle (~20 min)
+
+See **`kaggle/README.md`** — upload `kaggle/coincell_train.ipynb` as a **NEW** notebook only.
+- GPU ON · Internet ON · Secret `HF_TOKEN`
+- Run All → weights go to Hugging Face Hub
+
+### 2. Deploy live demo (~15 min)
 
 **If `hf auth login` crashes with `No module named huggingface_hub'`** — Homebrew's `hf` uses broken Python 3.14. Use either:
 

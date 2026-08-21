@@ -1,14 +1,8 @@
 from __future__ import annotations
 
-import os
-from pathlib import Path
-
-import cv2
-import numpy as np
 import torch
 import torch.nn.functional as F
 
-from coincell.classifier import load_models, save_models, train_models
 from coincell.clinical import build_protocol
 from coincell.gradcam import compute_gradcam, overlay_gradcam
 from coincell.halo_analyzer import analyze_halo, draw_overlay
@@ -16,50 +10,16 @@ from coincell.models import CLASS_NAMES
 from coincell.preprocess import enhance_xray, load_image, to_rgb_tensor
 from coincell.result import CoinCellResult
 from coincell.visualize import numpy_to_b64, radial_profile_chart
-
-
-WEIGHTS_ENV = "COINCELL_WEIGHTS"
-HF_MODEL_REPO = os.environ.get("COINCELL_HF_REPO", "arjunkshah12345-hash/coincell-weights")
-DEFAULT_WEIGHTS = Path("/tmp/coincell/coincell.pt")
-
-
-from coincell.result import CoinCellResult
+from coincell.weights import load_trained_models
 
 
 class CoinCellEngine:
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.single = None
-        self.dual = None
-        self._ensure_model()
-
-    def _weights_path(self) -> Path:
-        env = os.environ.get(WEIGHTS_ENV)
-        return Path(env) if env else DEFAULT_WEIGHTS
-
-    def _ensure_model(self) -> None:
-        path = self._weights_path()
-        if path.exists():
-            self.single, self.dual = load_models(path, self.device)
-            return
-        try:
-            from huggingface_hub import hf_hub_download
-
-            hub_path = hf_hub_download(
-                repo_id=HF_MODEL_REPO,
-                filename="coincell.pt",
-                local_dir=str(path.parent),
-            )
-            self.single, self.dual = load_models(hub_path, self.device)
-            return
-        except Exception:
-            pass
-        path.parent.mkdir(parents=True, exist_ok=True)
-        self.single, self.dual = train_models(device=self.device)
-        save_models(self.single, self.dual, path)
+        self.single, self.dual = load_trained_models(self.device)
 
     @torch.inference_mode()
-    def _model_probs(self, ap_gray: np.ndarray, lat_gray: np.ndarray | None) -> dict[str, float]:
+    def _model_probs(self, ap_gray, lat_gray=None) -> dict[str, float]:
         ap_rgb = to_rgb_tensor(enhance_xray(ap_gray))
         ap_t = torch.from_numpy(ap_rgb).permute(2, 0, 1).unsqueeze(0).to(self.device)
 
@@ -122,10 +82,8 @@ class CoinCellEngine:
             explanation += " AP halo without lateral step-off — stacked coins in differential; manage urgently."
 
         protocol = build_protocol(bat_n, ambiguous, dual_used)
-
         overlay = draw_overlay(ap_gray, ap_halo, prediction.split()[0])
 
-        # Grad-CAM on battery class
         ap_rgb = to_rgb_tensor(ap_gray)
         ap_t = torch.from_numpy(ap_rgb).permute(2, 0, 1).unsqueeze(0).float()
         model = self.dual if dual_used and self.dual else self.single

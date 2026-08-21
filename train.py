@@ -1,24 +1,22 @@
-#!/usr/bin/env python3
-"""Train CoinCell v2 models → /tmp (keeps user disk clean)."""
+"""
+Training is done on Kaggle GPU — not locally.
+
+See kaggle/coincell_train.ipynb and kaggle/README.md
+"""
 from __future__ import annotations
 
-import argparse
-from pathlib import Path
-
-from coincell.classifier import save_models, train_models
+import sys
 
 
 def main():
-    p = argparse.ArgumentParser()
-    p.add_argument("--out", default="/tmp/coincell/coincell.pt")
-    p.add_argument("--epochs", type=int, default=10)
-    args = p.parse_args()
-    out = Path(args.out)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    print(f"Training dual-view ensemble → {out}")
-    single, dual = train_models(epochs=args.epochs)
-    save_models(single, dual, out)
-    print("Done.")
+    print("CoinCell training runs on Kaggle (GPU).")
+    print()
+    print("1. Upload kaggle/coincell_train.ipynb as a NEW Kaggle notebook")
+    print("2. Settings → GPU ON, add HF_TOKEN secret")
+    print("3. Run All → weights upload to Hugging Face Hub")
+    print()
+    print("Guide: kaggle/README.md")
+    sys.exit(0)
 
 
 if __name__ == "__main__":
