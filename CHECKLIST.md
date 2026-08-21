@@ -18,14 +18,23 @@
 ## You must do (blocks winning)
 
 ### 1. Deploy live demo (~15 min)
+
+**If `hf auth login` crashes with `No module named huggingface_hub'`** — Homebrew's `hf` uses broken Python 3.14. Use either:
+
 ```bash
-python3 -m pip install huggingface_hub
+# Option A: project wrapper (recommended)
+export PATH="$HOME/Downloads/congressionalappchallenge/bin:$PATH"
+hf auth login
+
+# Option B: direct Python module
 python3 -m huggingface_hub.cli.hf auth login
-cd ~/Downloads/congressionalappchallenge
-python3 -m huggingface_hub.cli.hf repo create arjunkshah12345-hash/coincell --type space --space_sdk docker --exist-ok
-python3 -m huggingface_hub.cli.hf upload arjunkshah12345-hash/coincell . --repo-type space
 ```
-Or: HF website → New Space → Docker → connect GitHub repo `arjunkshah12345-hash/coincell`
+
+Then deploy:
+```bash
+cd ~/Downloads/congressionalappchallenge
+python3 scripts/deploy_space.py
+```
 
 ### 2. Record 2-minute video (~30 min)
 Follow `VIDEO.md` shot-by-shot. Upload to YouTube (public or unlisted).
