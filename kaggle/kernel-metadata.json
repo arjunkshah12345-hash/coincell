@@ -1,5 +1,5 @@
 {
-  "id": "aks1321/coincell-train",
+  "id": "aks1321/coincell-train-cpu",
   "title": "CoinCell Train CPU",
   "code_file": "coincell_train.ipynb",
   "language": "python",
