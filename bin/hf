@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Use working Python 3.12 — Homebrew /opt/homebrew/bin/hf is broken (Py3.14, no pip)
+exec python3 -m huggingface_hub.cli.hf "$@"
