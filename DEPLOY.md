@@ -1,40 +1,50 @@
-# Deploy CoinCell v2 to Hugging Face Spaces
+# CoinCell — No Hugging Face Setup
 
-Your disk is tight — **all compute runs on HF**, not your Mac.
+Everything runs from **GitHub + Kaggle + local**. Weights ship in `weights/coincell.pt`.
 
-## One-time setup
+---
 
-```bash
-pip install huggingface_hub   # on any machine with disk, or Colab
-hf auth login
-```
-
-## Push Space (Docker — full clinical UI)
+## Run the app (local)
 
 ```bash
 cd ~/Downloads/congressionalappchallenge
-hf repo create coincell --type space --space_sdk docker --exist_ok
-hf upload arjunkshah12345-hash/coincell . --repo-type space \
-  --exclude ".venv/*" "__pycache__/*" "*.pt"
+pip install -r requirements.txt
+chmod +x scripts/run.sh
+./scripts/run.sh
 ```
 
-Space URL: `https://huggingface.co/spaces/arjunkshah12345-hash/coincell`
+Open **http://localhost:7860**
 
-First boot auto-trains models in `/tmp` (~2 min CPU). Optional: upload weights for instant cold start:
+---
+
+## Train on Kaggle (CPU)
+
+1. Push notebook: `kaggle kernels push -p kaggle`
+2. Or open: https://www.kaggle.com/code/aks1321/coincell-train-cpu
+3. Run All → download `coincell.pt` from **Output** tab
+4. Copy to `weights/coincell.pt` in this repo
+
+Or train locally:
 
 ```bash
-python train.py --out /tmp/coincell/coincell.pt   # run on Colab/HF
-python scripts/upload_weights.py --repo arjunkshah12345-hash/coincell-weights
+python3 scripts/train_cpu.py
+cp /tmp/coincell/coincell.pt weights/coincell.pt
 ```
 
-## What judges see
+---
 
-- Professional dark clinical UI at `/`
-- Upload AP + lateral X-rays
-- Grad-CAM + radial halo chart + detection overlay
-- Clinical protocol with 2-hour window + hotlines
-- Live benchmark vs Emory 2020 at `/api/metrics`
+## CAC submission links
 
-## CAC deadline: October 26, 2026
+| Field | Value |
+|-------|--------|
+| **Source code** | https://github.com/arjunkshah12345-hash/coincell |
+| **Training** | https://www.kaggle.com/code/aks1321/coincell-train-cpu |
+| **Live demo** | Record `./scripts/run.sh` for video; judges can clone + run |
 
-See `SUBMISSION.md` for the 3-minute video script.
+For a public URL during judging, use GitHub Codespaces or share screen in your demo video.
+
+---
+
+## Metrics (current weights)
+
+See `weights/metrics.json` — 100% battery sensitivity vs 81% Emory 2020 baseline.

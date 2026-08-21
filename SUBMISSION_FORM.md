@@ -32,7 +32,7 @@ CoinCell gives ER teams and tele-radiology a web-based decision support tool tha
 
 ### What technical/coding difficulty did you encounter, and how did you overcome it?
 ```
-The core difficulty is stacked coins creating false "double halo" patterns on AP X-rays. I solved this with dual-view fusion (DualViewNet), OpenCV radial halo profiling, and an ambiguity flag that treats uncertain halos as battery emergencies. Models are trained on Kaggle GPU (400 synthetic samples per class, 20 epochs, battery-weighted loss 3×) and hosted on Hugging Face Hub; the web app runs inference-only on HF Spaces with Grad-CAM explainability and a clinical protocol engine. No patient data is stored anywhere.
+The core difficulty is stacked coins creating false "double halo" patterns on AP X-rays. I solved this with dual-view fusion (DualViewNet), OpenCV radial halo profiling, and an ambiguity flag that treats uncertain halos as battery emergencies. Models are trained on Kaggle CPU (synthetic X-rays, battery-weighted loss 3×) with weights shipped in the GitHub repo; the FastAPI web app runs inference-only with Grad-CAM explainability and a clinical protocol engine. No patient data is stored anywhere.
 ```
 
 ---

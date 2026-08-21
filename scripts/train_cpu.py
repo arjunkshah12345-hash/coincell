@@ -44,19 +44,20 @@ def main():
     metrics_path.write_text(json.dumps(metrics, indent=2))
     print(json.dumps(metrics, indent=2))
 
-    # Upload to HF if token available
+    # Upload to HF if token available (optional)
     token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
     if token:
-        from huggingface_hub import HfApi, create_repo
-
-        repo = os.environ.get("COINCELL_HF_REPO", "arjunkshah12345-hash/coincell-weights")
-        api = HfApi(token=token)
-        create_repo(repo, repo_type="model", exist_ok=True)
-        api.upload_file(str(weights), "coincell.pt", repo_id=repo, repo_type="model")
-        api.upload_file(str(metrics_path), "metrics.json", repo_id=repo, repo_type="model")
-        print(f"Uploaded → https://huggingface.co/{repo}")
-    else:
-        print("HF_TOKEN not set — weights local only:", weights)
+        try:
+            from huggingface_hub import HfApi, create_repo
+            repo = os.environ.get("COINCELL_HF_REPO", "arjunkshah12345-hash/coincell-weights")
+            api = HfApi(token=token)
+            create_repo(repo, repo_type="model", exist_ok=True)
+            api.upload_file(str(weights), "coincell.pt", repo_id=repo, repo_type="model")
+            api.upload_file(str(metrics_path), "metrics.json", repo_id=repo, repo_type="model")
+            print(f"Optional HF upload → https://huggingface.co/{repo}")
+        except Exception as e:
+            print(f"HF upload skipped: {e}")
+    print(f"Copy to repo: cp {weights} weights/coincell.pt")
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 venv/
 *.pt
+!weights/coincell.pt
 *.pth
 /tmp/
 .DS_Store
