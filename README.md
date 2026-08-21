@@ -40,7 +40,13 @@ Lateral ───► Step-off CV ────┤
                     └──► Grad-CAM overlay
 ```
 
-## Deploy (Hugging Face Spaces — Docker)
+## GitHub (live)
+
+**https://github.com/arjunkshah12345-hash/coincell**
+
+[![Tests](https://github.com/arjunkshah12345-hash/coincell/actions/workflows/test.yml/badge.svg)](https://github.com/arjunkshah12345-hash/coincell/actions)
+
+## Deploy live demo (required for submission)
 
 ```bash
 hf auth login

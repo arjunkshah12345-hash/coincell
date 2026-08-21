@@ -41,8 +41,8 @@ The core difficulty is stacked coins creating false "double halo" patterns on AP
 
 | Field | URL |
 |-------|-----|
-| **Live demo** | `https://huggingface.co/spaces/arjunkshah12345-hash/coincell` *(deploy first)* |
-| **Source code** | `https://github.com/arjunkshah12345-hash/coincell` |
+| **Live demo** | https://huggingface.co/spaces/arjunkshah12345-hash/coincell *(deploy — see CHECKLIST.md)* |
+| **Source code** | https://github.com/arjunkshah12345-hash/coincell ✅ |
 | **Demo video** | YouTube unlisted/public link *(record using VIDEO.md)* |
 
 ---
