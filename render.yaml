@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: haloscan
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: HALOSCAN_WEIGHTS
+        value: /app/weights/haloscan.pt
+      - key: PORT
+        value: "7860"
+    autoDeploy: true

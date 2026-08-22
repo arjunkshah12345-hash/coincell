@@ -10,7 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENV COINCELL_WEIGHTS=/tmp/haloscan/haloscan.pt
+ENV HALOSCAN_WEIGHTS=/app/weights/haloscan.pt
+ENV PORT=7860
 EXPOSE 7860
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \

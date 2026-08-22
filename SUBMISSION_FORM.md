@@ -41,7 +41,7 @@ The core difficulty is stacked coins creating false "double halo" patterns on AP
 
 | Field | URL |
 |-------|-----|
-| **Live demo** | https://haloscan.vercel.app/demo |
+| **Live app** | https://haloscan.vercel.app/scan |
 | **Website** | https://haloscan.vercel.app |
 | **Training** | https://www.kaggle.com/code/aks1321/coincell-train-cpu |
 | **Source code** | https://github.com/arjunkshah12345-hash/haloscan ✅ |

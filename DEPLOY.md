@@ -1,50 +1,47 @@
-# Haloscan — No Hugging Face Setup
+# Deploy Haloscan API (production)
 
-Everything runs from **GitHub + Kaggle + local**. Weights ship in `weights/haloscan.pt`.
+The **marketing site** lives on Vercel. **Live inference** requires the Python FastAPI backend.
 
----
+## Option A — Render (recommended, free tier)
 
-## Run the app (local)
+1. Push this repo to GitHub
+2. Go to [render.com](https://render.com) → New → Blueprint → connect `haloscan` repo
+3. Render reads `render.yaml` and deploys the Docker service
+4. Copy the service URL (e.g. `https://haloscan.onrender.com`)
+5. In Vercel → Project Settings → Environment Variables:
+   - `HALOSCAN_API_URL` = `https://haloscan.onrender.com`
+6. Redeploy Vercel: `cd website && vercel --prod`
 
-```bash
-cd ~/Downloads/congressionalappchallenge
-pip install -r requirements.txt
-chmod +x scripts/run.sh
-./scripts/run.sh
-```
-
-Open **http://localhost:7860**
-
----
-
-## Train on Kaggle (CPU)
-
-1. Push notebook: `kaggle kernels push -p kaggle`
-2. Or open: https://www.kaggle.com/code/aks1321/haloscan-train-cpu
-3. Run All → download `haloscan.pt` from **Output** tab
-4. Copy to `weights/haloscan.pt` in this repo
-
-Or train locally:
+## Option B — Local + Cloudflare tunnel (dev / demo)
 
 ```bash
-python3 scripts/train_cpu.py
-cp /tmp/haloscan/haloscan.pt weights/haloscan.pt
+./scripts/run.sh                    # port 7860
+# or PORT=7862 python3 app.py
+
+cloudflared tunnel --url http://localhost:7862
+# paste trycloudflare.com URL into Vercel HALOSCAN_API_URL
+cd website && vercel --prod
 ```
 
+## Option C — Fly.io (1GB VM)
+
+Requires billing on Fly. Then:
+
+```bash
+flyctl launch --copy-config
+flyctl deploy
+```
+
+Set `HALOSCAN_API_URL=https://haloscan.fly.dev` on Vercel.
+
 ---
 
-## CAC submission links
+## Verify
 
-| Field | Value |
-|-------|--------|
-| **Source code** | https://github.com/arjunkshah12345-hash/haloscan |
-| **Training** | https://www.kaggle.com/code/aks1321/haloscan-train-cpu |
-| **Live demo** | Record `./scripts/run.sh` for video; judges can clone + run |
+```bash
+curl https://haloscan.vercel.app/api/health
+# → {"status":"ok","model":"loaded",...}
 
-For a public URL during judging, use GitHub Codespaces or share screen in your demo video.
-
----
-
-## Metrics (current weights)
-
-See `weights/metrics.json` — 100% battery sensitivity vs 81% Emory 2020 baseline.
+open https://haloscan.vercel.app/scan
+# Press 1 → live BATTERY inference
+```

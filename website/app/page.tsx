@@ -34,8 +34,8 @@ export default function HomePage() {
           clinical protocol engine that errs toward never missing a battery.
         </p>
         <div className="cta-row">
-          <Link href="/demo" className="btn">
-            try live demo →
+          <Link href="/scan" className="btn">
+            launch haloscan →
           </Link>
           <a
             href="https://github.com/arjunkshah12345-hash/haloscan"
@@ -125,8 +125,8 @@ Output    → verdict · grad-cam · protocol · printable report`}</pre>
         <p className="label">links</p>
         <ul className="list">
           <li>
-            <Link href="/demo" className="row-link">
-              <span>interactive demo</span>
+            <Link href="/scan" className="row-link">
+              <span>live scanner — upload + inference</span>
               <span>→</span>
             </Link>
           </li>

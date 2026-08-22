@@ -25,7 +25,7 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 
 ### SHOT 3 — App reveal (5 sec)
 - **Visual:** Navigate to **https://haloscan.vercel.app**
-- **Audio:** "Haloscan — AI for the diagnostic gap."
+- **Audio:** "Haloscan — the double halo, decoded."
 
 ### SHOT 4 — Battery demo (20 sec)
 - **Visual:** Click **Battery** quick case

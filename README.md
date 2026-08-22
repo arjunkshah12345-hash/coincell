@@ -10,7 +10,7 @@
 <p align="center"><em>the double halo, decoded.</em></p>
 
 <p align="center">
-  <a href="https://haloscan.vercel.app">Live Demo</a> ·
+  <a href="https://haloscan.vercel.app/scan">Live Scanner</a> ·
   <a href="https://haloscan.vercel.app/judges">Judge Guide</a> ·
   <a href="https://www.kaggle.com/code/aks1321/coincell-train-cpu">Training</a>
 </p>

@@ -10,8 +10,8 @@ export function Nav({ current }: { current?: "home" | "demo" | "judges" | "docs"
         <span>haloscan</span>
       </Link>
       <div className="nav-links">
-        <Link href="/demo" aria-current={current === "demo" ? "page" : undefined}>
-          demo
+        <Link href="/scan" aria-current={current === "demo" ? "page" : undefined}>
+          scan
         </Link>
         <Link href="/judges" aria-current={current === "judges" ? "page" : undefined}>
           judges

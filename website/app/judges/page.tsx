@@ -18,7 +18,7 @@ export default function JudgesPage() {
         <p className="label">verify in 90 seconds</p>
         <ol className="muted" style={{ paddingLeft: 18 }}>
           <li style={{ marginBottom: 8 }}>
-            open <Link href="/demo">/demo</Link> → press <strong>1</strong> (battery) → CRITICAL protocol
+            open <Link href="/scan">/scan</Link> → press <strong>1</strong> (battery) → CRITICAL protocol
           </li>
           <li style={{ marginBottom: 8 }}>
             press <strong>3</strong> (stacked coins) → emergency flag despite coin mimic
