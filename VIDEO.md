@@ -6,7 +6,7 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 
 ## Pre-recording setup
 
-1. Run `./scripts/run.sh` OR use **https://haloscan.vercel.app/demo**
+1. Run `./scripts/run.sh` OR use **https://haloscan.ideatr.dev/scan**
 2. Browser zoom 100%, close unrelated tabs
 3. Fullscreen the app window
 4. Script on second monitor (don't read robotically)
@@ -24,7 +24,7 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 - **Audio:** "When a toddler swallows a disc, doctors have two hours if it's a battery in the esophagus. Stacked coins fake the halo sign."
 
 ### SHOT 3 — App reveal (5 sec)
-- **Visual:** Navigate to **https://haloscan.vercel.app**
+- **Visual:** Navigate to **https://haloscan.ideatr.dev/scan**
 - **Audio:** "Haloscan — the double halo, decoded."
 
 ### SHOT 4 — Battery demo (20 sec)

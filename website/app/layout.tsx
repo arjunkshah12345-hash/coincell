@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "haloscan",
     description: "The double halo, decoded. AI decision support after Reese's Law (P.L. 117-171).",
     type: "website",
-    url: "https://website-two-iota-91.vercel.app",
+    url: "https://haloscan.ideatr.dev",
   },
 };
 

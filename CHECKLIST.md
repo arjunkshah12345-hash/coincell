@@ -6,9 +6,9 @@
 
 ## Done ✅
 
-- [x] **Live scanner:** https://website-two-iota-91.vercel.app/scan
+- [x] **Live scanner:** https://haloscan.ideatr.dev/scan
 - [x] **API (Render):** https://haloscan.onrender.com — always-on, no laptop tunnel
-- [x] **Judges:** https://website-two-iota-91.vercel.app/judges
+- [x] **Judges:** https://haloscan.ideatr.dev/judges
 - [x] **GitHub:** https://github.com/arjunkshah12345-hash/haloscan
 - [x] 100% battery sensitivity vs 81% Emory baseline
 - [x] Render keepalive cron (GitHub Actions)
@@ -26,7 +26,7 @@
 
 ```bash
 curl https://haloscan.onrender.com/api/health
-curl https://website-two-iota-91.vercel.app/api/demo/stacked
+curl https://haloscan.ideatr.dev/api/demo/stacked
 ./scripts/run.sh              # local full stack
 cd website && vercel --prod   # redeploy frontend
 ```

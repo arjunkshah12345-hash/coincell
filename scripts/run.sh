@@ -11,6 +11,6 @@ fi
 export HALOSCAN_WEIGHTS="$(pwd)/weights/haloscan.pt"
 [[ -f "$HALOSCAN_WEIGHTS" ]] || export HALOSCAN_WEIGHTS="$(pwd)/weights/coincell.pt"
 echo "Haloscan → http://localhost:7860"
-echo "Website → https://haloscan.vercel.app"
+echo "Website → https://haloscan.ideatr.dev"
 echo "Weights: $HALOSCAN_WEIGHTS"
 python3 app.py
