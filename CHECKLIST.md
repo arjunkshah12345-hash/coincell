@@ -8,7 +8,9 @@
 
 - [x] **Live scanner:** https://haloscan.ideatr.dev/scan
 - [x] **API (Render):** https://haloscan.onrender.com — always-on, no laptop tunnel
-- [x] **Judges:** https://haloscan.ideatr.dev/judges
+- [x] **Architecture:** https://haloscan.ideatr.dev/architecture
+- [x] **Validation:** https://haloscan.ideatr.dev/validation
+- [x] **Use cases:** https://haloscan.ideatr.dev/use-cases
 - [x] **GitHub:** https://github.com/arjunkshah12345-hash/haloscan
 - [x] 100% battery sensitivity vs 81% Emory baseline
 - [x] Render keepalive cron (GitHub Actions)

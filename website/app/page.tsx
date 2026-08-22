@@ -1,5 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CaseFigure, CompareRow } from "@/components/CaseFigure";
+import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
 import { Nav } from "@/components/Nav";
 
 export default function HomePage() {
@@ -136,38 +138,17 @@ export default function HomePage() {
       <section>
         <h2>3. System Architecture</h2>
         <p>
-          Haloscan is not a single black-box classifier. It is a <strong>fusion ensemble</strong> designed
-          for clinical transparency: each branch produces interpretable intermediate representations that a
-          radiologist—or a judge—can inspect.
+          Haloscan is not a single black-box classifier. It is a <strong>fusion ensemble</strong> designed for
+          clinical transparency: each branch produces interpretable intermediate representations that a radiologist—or
+          a judge—can inspect.
         </p>
 
-        <div className="pipeline">
-          <div className="pipeline-step">
-            <strong>Input</strong>
-            AP + optional lateral pediatric CXR
-          </div>
-          <div className="pipeline-step">
-            <strong>CV branch</strong>
-            CLAHE · radial halo profile · Hough fallback
-          </div>
-          <div className="pipeline-step">
-            <strong>CNN branch</strong>
-            DualViewNet · 3× battery-weighted loss
-          </div>
-          <div className="pipeline-step">
-            <strong>Fusion</strong>
-            55% CV + 40% CNN + dual-view bonus
-          </div>
-          <div className="pipeline-step">
-            <strong>Output</strong>
-            Verdict · Grad-CAM · protocol · HTML report
-          </div>
-        </div>
+        <ArchitectureDiagram />
 
-        <pre>{`Training:  Kaggle CPU · synthetic pediatric radiographs · weights bundled in repo
-Inference: FastAPI + PyTorch + OpenCV · ~200–500 ms on Render (CPU)
-Privacy:   No patient data stored · upload processed in memory only
-License:   MIT · full source at github.com/arjunkshah12345-hash/haloscan`}</pre>
+        <p>
+          Full module-level documentation, API routes, and deployment topology:{" "}
+          <Link href="/architecture">Architecture page →</Link>
+        </p>
       </section>
 
       <section>
@@ -222,6 +203,22 @@ License:   MIT · full source at github.com/arjunkshah12345-hash/haloscan`}</pre
           emergency medicine, the asymmetric cost of a missed battery far exceeds the cost of unnecessary
           endoscopy workup. The stacked-coin case (Figure 2) demonstrates this conservative policy in action.
         </div>
+
+        <figure className="research-figure">
+          <Image
+            src="/figures/validation/benchmark.png"
+            alt="Benchmark comparison chart"
+            width={700}
+            height={420}
+            className="figure-img"
+            unoptimized
+            style={{ width: "100%", height: "auto", background: "#fff" }}
+          />
+          <p className="figure-caption">
+            <strong>Figure 4.</strong> Benchmark comparison vs. Emory 2020 baseline.{" "}
+            <Link href="/validation">Full validation report with confusion matrix →</Link>
+          </p>
+        </figure>
       </section>
 
       <CaseFigure
@@ -260,7 +257,20 @@ License:   MIT · full source at github.com/arjunkshah12345-hash/haloscan`}</pre
       </section>
 
       <section>
-        <h2>6. Try the Live System</h2>
+        <h2>6. Clinical Use Cases</h2>
+        <p>
+          Four vignettes—urban ER, rural single-view, tele-radiology false halo, and negative screen—map directly
+          to scanner cases 1–4. Each includes real exported figures from the inference pipeline.
+        </p>
+        <div className="cta-row">
+          <Link href="/use-cases" className="btn btn-ghost">
+            Read Use Cases →
+          </Link>
+        </div>
+      </section>
+
+      <section>
+        <h2>7. Try the Live System</h2>
         <p>
           The clinical scanner runs real PyTorch inference on a cloud-hosted API. Upload your own radiograph, or
           press keys <strong>1–4</strong> to load reference cases identical to the figures above.
@@ -281,8 +291,26 @@ License:   MIT · full source at github.com/arjunkshah12345-hash/haloscan`}</pre
       </section>
 
       <section>
-        <h2>References &amp; Resources</h2>
+        <h2>8. References &amp; Resources</h2>
         <ul className="list">
+          <li>
+            <Link href="/architecture" className="row-link">
+              <span>System architecture &amp; API reference</span>
+              <span>→</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/validation" className="row-link">
+              <span>Validation, smoke tests &amp; confusion matrix</span>
+              <span>→</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/use-cases" className="row-link">
+              <span>Clinical use case vignettes</span>
+              <span>→</span>
+            </Link>
+          </li>
           <li>
             <a
               href="https://www.congress.gov/bill/117th-congress/house-bill/5313"

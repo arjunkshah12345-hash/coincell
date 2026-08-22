@@ -32,7 +32,11 @@ export default function JudgesPage() {
           <li>
             Clone the repository and run <code>python3 tests/smoke_test.py</code> — all checks should pass.
           </li>
-          <li>Review architecture details in README.md and TECHNICAL.md on GitHub.</li>
+          <li>
+            Review <Link href="/architecture">architecture</Link>,{" "}
+            <Link href="/validation">validation figures</Link>, and{" "}
+            <Link href="/use-cases">clinical use cases</Link> on the site; README.md and TECHNICAL.md on GitHub.
+          </li>
         </ol>
       </section>
 

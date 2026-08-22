@@ -1,0 +1,77 @@
+{
+  "metrics": {
+    "haloscan": {
+      "battery_sensitivity": 1.0,
+      "coin_sensitivity": 0.725,
+      "stacked_coin_emergency_rate": 0.65,
+      "n_per_class": 40
+    },
+    "baseline_emory_2020": {
+      "source": "Emory SPR 2020 (Rostad et al.)",
+      "battery_sensitivity": 0.81,
+      "battery_specificity": 0.92,
+      "coin_sensitivity": 0.83,
+      "overall_accuracy": 0.88
+    },
+    "beats_baseline_battery_sensitivity": true
+  },
+  "confusion_matrix": {
+    "classes": [
+      "Battery",
+      "Coin",
+      "Stacked",
+      "Normal"
+    ],
+    "matrix": [
+      [
+        40,
+        0,
+        0,
+        0
+      ],
+      [
+        11,
+        29,
+        0,
+        0
+      ],
+      [
+        26,
+        14,
+        0,
+        0
+      ],
+      [
+        7,
+        33,
+        0,
+        0
+      ]
+    ],
+    "n_per_class": 40
+  },
+  "smoke_tests": [
+    {
+      "name": "test_imports",
+      "desc": "Core package imports"
+    },
+    {
+      "name": "test_synthetic_shapes",
+      "desc": "Synthetic radiograph generator"
+    },
+    {
+      "name": "test_halo_analyzer",
+      "desc": "CV halo scoring (battery vs coin)"
+    },
+    {
+      "name": "test_clinical_protocol",
+      "desc": "CRITICAL / ROUTINE protocol engine"
+    },
+    {
+      "name": "test_report_generation",
+      "desc": "HTML clinical report export"
+    }
+  ],
+  "ci_workflow": "Haloscan Tests (.github/workflows/test.yml)",
+  "eval_command": "python3 -m haloscan.evaluate --n 40"
+}

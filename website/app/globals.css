@@ -521,6 +521,45 @@ footer {
   color: var(--critical);
 }
 
+.architecture-diagram {
+  margin: 28px 0 36px;
+  border: 1px solid var(--line);
+  padding: 16px;
+  background: #fafafa;
+  overflow-x: auto;
+}
+
+.architecture-diagram svg {
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+  display: block;
+}
+
+.module-block {
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.module-block h3 {
+  margin-top: 0;
+}
+
+.use-case-section {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.use-case-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 580px;
+  margin: 20px 0;
+}
+
 @media (max-width: 640px) {
   body {
     font-size: 16px;
@@ -554,7 +593,8 @@ footer {
   .figure-grid-2,
   .compare-row,
   .stat-row,
-  .pipeline {
+  .pipeline,
+  .use-case-preview {
     grid-template-columns: 1fr;
   }
 }

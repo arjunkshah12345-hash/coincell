@@ -1,6 +1,10 @@
 import Link from "next/link";
 
-export function Nav({ current }: { current?: "home" | "demo" | "judges" | "docs" }) {
+export function Nav({
+  current,
+}: {
+  current?: "home" | "demo" | "judges" | "docs" | "architecture" | "usecases" | "validation";
+}) {
   return (
     <nav>
       <Link href="/" className="site-title">
@@ -8,13 +12,22 @@ export function Nav({ current }: { current?: "home" | "demo" | "judges" | "docs"
       </Link>
       <div className="nav-links">
         <Link href="/scan" aria-current={current === "demo" ? "page" : undefined}>
-          Clinical Scanner
+          Scanner
+        </Link>
+        <Link href="/use-cases" aria-current={current === "usecases" ? "page" : undefined}>
+          Use Cases
+        </Link>
+        <Link href="/architecture" aria-current={current === "architecture" ? "page" : undefined}>
+          Architecture
+        </Link>
+        <Link href="/validation" aria-current={current === "validation" ? "page" : undefined}>
+          Validation
         </Link>
         <Link href="/judges" aria-current={current === "judges" ? "page" : undefined}>
-          Judge Guide
+          Judges
         </Link>
         <a href="https://github.com/arjunkshah12345-hash/haloscan" target="_blank" rel="noopener noreferrer">
-          Source Code
+          GitHub
         </a>
       </div>
     </nav>
