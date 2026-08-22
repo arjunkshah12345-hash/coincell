@@ -10,8 +10,8 @@
 <p align="center"><em>the double halo, decoded.</em></p>
 
 <p align="center">
-  <a href="https://haloscan.vercel.app/scan">Live Scanner</a> ·
-  <a href="https://haloscan.vercel.app/judges">Judge Guide</a> ·
+  <a href="https://website-two-iota-91.vercel.app/scan">Live Scanner</a> ·
+  <a href="https://website-two-iota-91.vercel.app/judges">Judge Guide</a> ·
   <a href="https://www.kaggle.com/code/aks1321/coincell-train-cpu">Training</a>
 </p>
 
@@ -30,7 +30,7 @@
 Congress passed child-proof battery packaging **409–2**. When a disc already sits in a child's esophagus, clinicians still have **~2 hours**. Stacked coins **fake the double halo sign**. Emory's 2020 ML model hit 81% battery sensitivity and **never shipped**. Haloscan does.
 
 <p align="center">
-  <a href="https://haloscan.vercel.app/demo"><strong>→ Try the live demo</strong></a>
+  <a href="https://website-two-iota-91.vercel.app/scan"><strong>→ Try the live demo</strong></a>
 </p>
 
 ---
@@ -147,8 +147,9 @@ Built to connect **federal legislation** (Reese's Law, P.L. 117-171) to an unsol
 
 | Resource | Link |
 |----------|------|
-| Live demo | https://haloscan.vercel.app/demo |
-| Judge guide | https://haloscan.vercel.app/judges |
+| Live demo | https://website-two-iota-91.vercel.app/scan |
+| Judge guide | https://website-two-iota-91.vercel.app/judges |
+| API (Render) | https://haloscan.onrender.com |
 | Submission copy | [`SUBMISSION_FORM.md`](SUBMISSION_FORM.md) |
 | Video script | [`VIDEO.md`](VIDEO.md) |
 

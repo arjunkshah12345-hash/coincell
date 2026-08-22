@@ -4,6 +4,8 @@ services:
     runtime: docker
     plan: free
     region: oregon
+    repo: https://github.com/arjunkshah12345-hash/haloscan
+    branch: main
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
     envVars:

@@ -1,47 +1,101 @@
-# Deploy Haloscan API (production)
+# Haloscan — Production Deployment
 
-The **marketing site** lives on Vercel. **Live inference** requires the Python FastAPI backend.
+**Status: LIVE** (Aug 2026)
 
-## Option A — Render (recommended, free tier)
+| Layer | URL | Host |
+|-------|-----|------|
+| **Frontend** | https://website-two-iota-91.vercel.app/scan | Vercel |
+| **API** | https://haloscan.onrender.com | Render (Docker, free tier) |
+| **Source** | https://github.com/arjunkshah12345-hash/haloscan | GitHub |
 
-1. Push this repo to GitHub
-2. Go to [render.com](https://render.com) → New → Blueprint → connect `haloscan` repo
-3. Render reads `render.yaml` and deploys the Docker service
-4. Copy the service URL (e.g. `https://haloscan.onrender.com`)
-5. In Vercel → Project Settings → Environment Variables:
-   - `HALOSCAN_API_URL` = `https://haloscan.onrender.com`
-6. Redeploy Vercel: `cd website && vercel --prod`
+Vercel proxies `/api/*` → Render via `HALOSCAN_API_URL`.
 
-## Option B — Local + Cloudflare tunnel (dev / demo)
+---
 
-```bash
-./scripts/run.sh                    # port 7860
-# or PORT=7862 python3 app.py
+## Architecture
 
-cloudflared tunnel --url http://localhost:7862
-# paste trycloudflare.com URL into Vercel HALOSCAN_API_URL
-cd website && vercel --prod
+```
+website-two-iota-91.vercel.app/scan
+        │
+        ▼  (HALOSCAN_API_URL)
+https://haloscan.onrender.com/api/*
+        │
+        ▼
+FastAPI + PyTorch + OpenCV (weights/haloscan.pt)
 ```
 
-## Option C — Fly.io (1GB VM)
+---
 
-Requires billing on Fly. Then:
+## Render service
+
+- **Dashboard:** https://dashboard.render.com/web/srv-da4tc1jm8hqs73anthk0
+- **Service ID:** `srv-da4tc1jm8hqs73anthk0`
+- **Auto-deploy:** pushes to `main` trigger rebuild
+- **Keepalive:** GitHub Actions pings `/api/health` every 14 min (`.github/workflows/render-keepalive.yml`)
+
+### Redeploy API
 
 ```bash
-flyctl launch --copy-config
-flyctl deploy
+render deploys create srv-da4tc1jm8hqs73anthk0 --wait --confirm
 ```
 
-Set `HALOSCAN_API_URL=https://haloscan.fly.dev` on Vercel.
+### Recreate from CLI
+
+```bash
+render services create \
+  --name haloscan \
+  --type web_service \
+  --runtime docker \
+  --repo https://github.com/arjunkshah12345-hash/haloscan \
+  --branch main \
+  --region oregon \
+  --plan free \
+  --health-check-path /api/health \
+  --env-var HALOSCAN_WEIGHTS=/app/weights/haloscan.pt \
+  --env-var PORT=7860 \
+  --confirm
+```
+
+---
+
+## Vercel frontend
+
+```bash
+cd website
+vercel env ls                    # HALOSCAN_API_URL → haloscan.onrender.com
+vercel --prod --yes
+```
+
+---
+
+## Custom domain (optional)
+
+`haloscan.arjunshah.xyz` is added on Vercel. DNS lives at **topdns** (not Vercel nameservers). Add at your registrar:
+
+```
+A    haloscan    76.76.21.21
+```
+
+Or switch `arjunshah.xyz` nameservers to Vercel (`ns1.vercel-dns.com`, `ns2.vercel-dns.com`).
 
 ---
 
 ## Verify
 
 ```bash
-curl https://haloscan.vercel.app/api/health
-# → {"status":"ok","model":"loaded",...}
-
-open https://haloscan.vercel.app/scan
-# Press 1 → live BATTERY inference
+curl https://haloscan.onrender.com/api/health
+curl https://website-two-iota-91.vercel.app/api/health
+curl https://website-two-iota-91.vercel.app/api/demo/battery
+open https://website-two-iota-91.vercel.app/scan
 ```
+
+---
+
+## Local dev (no cloud)
+
+```bash
+./scripts/run.sh          # http://localhost:7860
+cd website && npm run dev # http://localhost:3000
+```
+
+For temporary Vercel ↔ local API testing: `./scripts/tunnel_api.sh`

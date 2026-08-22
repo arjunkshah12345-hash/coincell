@@ -1,0 +1,15 @@
+name: Render Keepalive
+
+on:
+  schedule:
+    # Ping Render every 14 min so free tier stays warm during demo windows
+    - cron: "*/14 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake Haloscan API
+        run: |
+          curl -fsS --max-time 120 "https://haloscan.onrender.com/api/health" | grep -q '"status":"ok"'

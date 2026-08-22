@@ -6,17 +6,18 @@
 
 ## Done ✅
 
-- [x] **Live scanner:** https://haloscan.vercel.app/scan (real PyTorch inference via API proxy)
-- [x] **Fallback URL:** https://website-two-iota-91.vercel.app/scan
-- [x] **Judges:** https://haloscan.vercel.app/judges
+- [x] **Live scanner:** https://website-two-iota-91.vercel.app/scan
+- [x] **API (Render):** https://haloscan.onrender.com — always-on, no laptop tunnel
+- [x] **Judges:** https://website-two-iota-91.vercel.app/judges
 - [x] **GitHub:** https://github.com/arjunkshah12345-hash/haloscan
 - [x] 100% battery sensitivity vs 81% Emory baseline
+- [x] Render keepalive cron (GitHub Actions)
 
 ---
 
 ## Before submit
 
-- [ ] Open `/scan` → press **1** (battery) and **3** (stacked coins) — watch inference time (~1–2s)
+- [ ] Open `/scan` → press **1** (battery) and **3** (stacked coins) — watch inference time
 - [ ] Upload a test image → real analyze (not static JSON)
 - [ ] Record video with live scanner on screen
 - [ ] Submit as **Haloscan** using `SUBMISSION_FORM.md`
@@ -24,7 +25,8 @@
 ---
 
 ```bash
+curl https://haloscan.onrender.com/api/health
+curl https://website-two-iota-91.vercel.app/api/demo/stacked
 ./scripts/run.sh              # local full stack
-./scripts/tunnel_api.sh       # expose API for Vercel
 cd website && vercel --prod   # redeploy frontend
 ```
