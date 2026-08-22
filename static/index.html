@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CoinCell — AI decision support distinguishing button batteries from coins on pediatric X-rays. Closing the diagnostic gap after Reese's Law (P.L. 117-171)." />
+  <meta name="theme-color" content="#0c0f14" />
   <title>CoinCell — Battery vs Coin X-ray AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif&display=swap" rel="stylesheet" />
@@ -12,58 +14,103 @@
   <header class="header">
     <div class="header-inner">
       <div class="brand">
-        <span class="brand-icon">🩻</span>
+        <span class="brand-icon" aria-hidden="true">🩻</span>
         <div>
           <h1>CoinCell</h1>
           <p class="tagline">AI for the diagnostic gap after Reese's Law</p>
         </div>
       </div>
-      <div class="header-meta">
+      <nav class="header-nav" aria-label="Site">
         <span class="badge">P.L. 117-171</span>
         <span class="badge badge-muted">Decision Support</span>
-        <a href="/judge" class="badge badge-muted" style="text-decoration:none;margin-left:0.5rem">For Judges</a>
-      </div>
+        <a href="/judge" class="nav-link">For Judges</a>
+        <a href="https://github.com/arjunkshah12345-hash/coincell" class="nav-link" target="_blank" rel="noopener">GitHub</a>
+      </nav>
     </div>
   </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="hero-kicker">Reese's Law fixed prevention · CoinCell fixes diagnosis</p>
+        <h2 id="hero-title">Two hours. One disc. Zero missed batteries.</h2>
+        <p class="hero-lead">
+          When a toddler swallows a disc-shaped object, clinicians must decide in the esophageal emergency window.
+          Stacked coins mimic the double halo sign. CoinCell fuses computer vision with dual-view deep learning.
+        </p>
+      </div>
+      <div class="hero-stats" id="hero-stats">
+        <div class="stat-card">
+          <strong id="stat-battery">—</strong>
+          <span>Battery sensitivity</span>
+          <em>vs 81% Emory 2020</em>
+        </div>
+        <div class="stat-card stat-accent">
+          <strong>2 hr</strong>
+          <span>Endoscopy target</span>
+          <em>Esophageal battery window</em>
+        </div>
+        <div class="stat-card">
+          <strong id="stat-stacked">—</strong>
+          <span>Stacked-coin catch</span>
+          <em>False halo cases flagged</em>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <main class="layout">
     <section class="panel upload-panel">
       <h2>Analyze X-ray</h2>
       <p class="lead">Upload AP (required) and lateral (recommended). Dual-view fusion disambiguates stacked-coin false halos.</p>
 
-      <div class="dropzone" id="drop-ap" data-target="ap">
+      <div class="dropzone" id="drop-ap" data-target="ap" role="button" tabindex="0" aria-label="Upload AP frontal X-ray">
         <input type="file" id="ap-input" accept="image/*" hidden />
         <div class="dropzone-content">
+          <span class="drop-icon">📤</span>
           <strong>AP (frontal) view</strong>
-          <span>Click or drag X-ray</span>
+          <span>Click, drag, or paste image</span>
         </div>
         <img id="ap-preview" class="preview hidden" alt="AP preview" />
       </div>
 
-      <div class="dropzone" id="drop-lat" data-target="lat">
+      <div class="dropzone" id="drop-lat" data-target="lat" role="button" tabindex="0" aria-label="Upload lateral X-ray">
         <input type="file" id="lat-input" accept="image/*" hidden />
         <div class="dropzone-content">
+          <span class="drop-icon">📤</span>
           <strong>Lateral view</strong>
           <span>Optional — improves accuracy</span>
         </div>
         <img id="lat-preview" class="preview hidden" alt="Lateral preview" />
       </div>
 
-      <button id="analyze-btn" class="btn-primary" disabled>Analyze X-ray</button>
+      <button id="analyze-btn" class="btn-primary" disabled>
+        <span>Analyze X-ray</span>
+        <kbd class="kbd-hint">↵</kbd>
+      </button>
 
-      <div class="demo-row">
-        <span class="demo-label">Quick cases:</span>
-        <button class="btn-ghost" data-demo="battery">Battery</button>
-        <button class="btn-ghost" data-demo="coin">Coin</button>
-        <button class="btn-ghost" data-demo="stacked">Stacked coins</button>
-        <button class="btn-ghost" data-demo="normal">Normal</button>
+      <div class="case-library">
+        <div class="case-library-head">
+          <span class="demo-label">Case library</span>
+          <span class="demo-hint">Keys 1–4</span>
+        </div>
+        <div class="case-grid" id="case-grid" aria-live="polite"></div>
       </div>
     </section>
 
-    <section class="panel results-panel hidden" id="results">
-      <div class="verdict" id="verdict">
-        <span class="verdict-label" id="verdict-text">—</span>
-        <span class="verdict-conf" id="verdict-conf"></span>
+    <section class="panel results-panel hidden" id="results" aria-live="polite">
+      <div class="results-head">
+        <div class="verdict" id="verdict">
+          <div>
+            <span class="verdict-label" id="verdict-text">—</span>
+            <span class="verdict-conf" id="verdict-conf"></span>
+          </div>
+          <span class="inference-time" id="inference-time"></span>
+        </div>
+        <div class="emergency-banner hidden" id="emergency-banner">
+          <span class="pulse-dot"></span>
+          Treat as battery emergency until endoscopy rules out
+        </div>
       </div>
 
       <div class="prob-bars">
@@ -79,18 +126,41 @@
         </div>
       </div>
 
+      <div class="ensemble" id="ensemble">
+        <h3>Ensemble breakdown</h3>
+        <p class="ensemble-lead">OpenCV halo physics (55%) + DualViewNet CNN (40%) + dual-view bonus</p>
+        <div class="ensemble-grid">
+          <div class="ensemble-col">
+            <span class="ensemble-label">Computer vision</span>
+            <div class="mini-bar"><div id="cv-battery-bar" class="mini-fill bar-battery"></div></div>
+            <span id="cv-battery-pct" class="ensemble-val">—</span>
+          </div>
+          <div class="ensemble-col">
+            <span class="ensemble-label">Neural network</span>
+            <div class="mini-bar"><div id="cnn-battery-bar" class="mini-fill bar-battery"></div></div>
+            <span id="cnn-battery-pct" class="ensemble-val">—</span>
+          </div>
+          <div class="ensemble-col">
+            <span class="ensemble-label">Fused output</span>
+            <div class="mini-bar"><div id="fused-battery-bar" class="mini-fill bar-battery"></div></div>
+            <span id="fused-battery-pct" class="ensemble-val">—</span>
+          </div>
+        </div>
+      </div>
+
       <div class="scores">
         <div class="score-chip">Halo <strong id="halo-score">—</strong></div>
         <div class="score-chip">Step-off <strong id="stepoff-score">—</strong></div>
         <div class="score-chip" id="dual-chip">Dual-view <strong id="dual-used">—</strong></div>
+        <div class="score-chip hidden" id="ambiguous-chip">Ambiguous halo <strong>Yes</strong></div>
       </div>
 
       <p class="explanation" id="explanation"></p>
 
       <div class="images-grid">
-        <figure><figcaption>Detection</figcaption><img id="img-overlay" alt="Overlay" /></figure>
-        <figure><figcaption>Grad-CAM</figcaption><img id="img-gradcam" alt="Grad-CAM" /></figure>
-        <figure><figcaption>Radial profile</figcaption><img id="img-radial" alt="Radial profile" /></figure>
+        <figure><figcaption>Detection overlay</figcaption><img id="img-overlay" alt="Detection overlay" /></figure>
+        <figure><figcaption>Grad-CAM focus</figcaption><img id="img-gradcam" alt="Grad-CAM heatmap" /></figure>
+        <figure><figcaption>Radial profile</figcaption><img id="img-radial" alt="Radial halo profile chart" /></figure>
       </div>
 
       <div class="protocol" id="protocol">
@@ -98,11 +168,13 @@
         <p id="protocol-window" class="protocol-window"></p>
         <ul id="protocol-actions"></ul>
         <div class="contacts" id="protocol-contacts"></div>
+        <blockquote class="reese-note" id="reese-note"></blockquote>
       </div>
 
       <div class="result-actions">
         <button id="download-report" class="btn-secondary hidden">Download clinical report</button>
         <button id="share-verdict" class="btn-secondary hidden">Copy summary</button>
+        <button id="reset-analysis" class="btn-ghost hidden">New case</button>
       </div>
     </section>
 
@@ -113,12 +185,13 @@
         When a disc appears on X-ray, clinicians have ~2 hours if it's a battery in the esophagus.
       </blockquote>
       <ul class="facts">
-        <li>Stacked coins mimic the double halo sign</li>
-        <li>Emory 2020 ML: 81% battery sensitivity — never shipped</li>
-        <li>CoinCell: CV halo + dual-view CNN fusion</li>
+        <li>Stacked coins mimic the double halo sign on AP films</li>
+        <li>Emory 2020 ML: 81% battery sensitivity — never shipped clinically</li>
+        <li>CoinCell: CV halo + DualViewNet fusion + Grad-CAM explainability</li>
+        <li>Weights trained on Kaggle CPU · runs fully offline</li>
       </ul>
       <div class="metrics-box" id="metrics-box">
-        <h3>Benchmark <button id="refresh-metrics" class="btn-tiny" title="Refresh">↻</button></h3>
+        <h3>Benchmark <button id="refresh-metrics" class="btn-tiny" title="Re-run live benchmark">↻</button></h3>
         <div id="metrics-content">Loading…</div>
       </div>
 
@@ -126,7 +199,7 @@
         <summary>Architecture (for judges)</summary>
         <pre>AP X-ray → CLAHE → Halo analyzer (radial profile)
 Lateral  → Step-off detector
-Both     → DualViewNet fusion (battery-weighted loss)
+Both     → DualViewNet fusion (battery-weighted loss 3×)
 Ensemble → CV (55%) + CNN (40%) + dual bonus
 Output   → Verdict + Grad-CAM + clinical protocol</pre>
       </details>
@@ -134,10 +207,12 @@ Output   → Verdict + Grad-CAM + clinical protocol</pre>
     </aside>
   </main>
 
-  <div class="loading hidden" id="loading">
-    <div class="spinner"></div>
-    <span>Running ensemble inference…</span>
+  <div class="loading hidden" id="loading" role="status" aria-live="polite">
+    <div class="scan-ring"></div>
+    <span id="loading-text">Running ensemble inference…</span>
   </div>
+
+  <div class="toast-container" id="toasts" aria-live="polite"></div>
 
   <script src="/static/app.js"></script>
 </body>

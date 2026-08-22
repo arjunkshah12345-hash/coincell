@@ -4,57 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CoinCell — Judge Guide</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Instrument+Serif&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/styles.css" />
   <style>
-    .judge-page { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem; }
-    .judge-page h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-    .judge-page h2 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; color: #3b82f6; }
-    .judge-page p, .judge-page li { color: #8b95a8; line-height: 1.65; font-size: 0.9rem; }
-    .judge-page ul { padding-left: 1.25rem; margin: 0.5rem 0; }
-    .judge-page code { background: #1c2433; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; }
+    .judge-page { max-width: 820px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .judge-page h1 { font-family: var(--serif); font-size: 2rem; font-weight: 400; margin-bottom: 0.35rem; }
+    .judge-sub { color: var(--muted); margin-bottom: 2rem; }
+    .judge-page h2 { font-size: 1rem; margin: 2rem 0 0.75rem; color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+    .judge-page p, .judge-page li { color: var(--muted); line-height: 1.7; font-size: 0.9rem; }
+    .judge-page ol { padding-left: 1.25rem; margin: 0.75rem 0; }
+    .judge-page ol li { margin: 0.5rem 0; }
+    .judge-page code { background: var(--surface2); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85rem; border: 1px solid var(--border); }
     .rubric { display: grid; gap: 0.75rem; margin: 1rem 0; }
-    .rubric-card { background: #141a24; border: 1px solid #2a3548; border-radius: 8px; padding: 1rem; }
-    .rubric-card strong { color: #e8ecf4; display: block; margin-bottom: 0.35rem; }
-    .back { display: inline-block; margin-bottom: 1rem; color: #3b82f6; text-decoration: none; font-size: 0.9rem; }
+    .rubric-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
+    .rubric-card strong { color: var(--text); display: block; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .back { display: inline-flex; align-items: center; gap: 0.35rem; margin-bottom: 1.5rem; color: var(--blue); text-decoration: none; font-size: 0.9rem; }
+    .verify-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin: 1rem 0; }
+    .verify-box strong { color: var(--text); }
+    .links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+    .links a { font-size: 0.85rem; color: var(--blue); text-decoration: none; padding: 0.4rem 0.75rem; border: 1px solid var(--border); border-radius: 8px; }
+    .links a:hover { border-color: var(--blue); }
   </style>
 </head>
 <body>
   <div class="judge-page">
     <a href="/" class="back">← Back to CoinCell demo</a>
     <h1>CoinCell — Judge Verification Guide</h1>
-    <p>Congressional App Challenge 2026 · Decision support for pediatric foreign-body X-rays</p>
+    <p class="judge-sub">Congressional App Challenge 2026 · Pediatric foreign-body X-ray decision support</p>
 
-    <h2>60-second verification</h2>
-    <ol>
-      <li>Go to <a href="/" style="color:#3b82f6">homepage</a></li>
-      <li>Click <strong>Battery</strong> → CRITICAL verdict + protocol appears</li>
-      <li>Click <strong>Stacked coins</strong> → emergency flag despite ambiguous halo</li>
-      <li>Click <strong>Download clinical report</strong> → HTML report with overlays</li>
-    </ol>
+    <div class="links">
+      <a href="/">Live demo</a>
+      <a href="https://github.com/arjunkshah12345-hash/coincell" target="_blank" rel="noopener">GitHub source</a>
+      <a href="https://www.kaggle.com/code/aks1321/coincell-train-cpu" target="_blank" rel="noopener">Kaggle training</a>
+    </div>
+
+    <h2>90-second verification</h2>
+    <div class="verify-box">
+      <ol>
+        <li>Open the <a href="/" style="color:var(--blue)">homepage</a> — hero stats show 100% battery sensitivity vs Emory baseline</li>
+        <li>Press <strong>1</strong> or click <strong>Button battery</strong> — CRITICAL verdict, X-ray previews load, clinical protocol appears</li>
+        <li>Press <strong>3</strong> or click <strong>Stacked coins</strong> — emergency banner despite ambiguous halo (the hard case)</li>
+        <li>Scroll to <strong>Ensemble breakdown</strong> — CV + CNN fusion visible</li>
+        <li>Click <strong>Download clinical report</strong> — printable HTML with overlays and hotlines</li>
+        <li>Run tests: <code>python3 tests/smoke_test.py</code></li>
+      </ol>
+    </div>
 
     <h2>Rubric mapping</h2>
     <div class="rubric">
       <div class="rubric-card">
         <strong>1. Quality of idea</strong>
-        Reese's Law (P.L. 117-171) fixed battery packaging after pediatric deaths. CoinCell addresses the remaining diagnostic gap — distinguishing batteries from coins on X-ray within the 2-hour esophageal emergency window. Stacked coins mimic the double halo sign; this is a named, unsolved clinical failure mode.
+        Reese's Law (P.L. 117-171) passed 409–2 and mandated child-proof battery packaging after pediatric deaths.
+        CoinCell addresses the remaining diagnostic gap — distinguishing batteries from coins on X-ray within the 2-hour esophageal emergency window.
+        Stacked coins mimic the double halo sign; this is a named, unsolved clinical failure mode.
       </div>
       <div class="rubric-card">
         <strong>2. Implementation</strong>
-        Live web app with dual-image upload, probability visualization, Grad-CAM explainability, radial halo chart, clinical protocol engine, and downloadable HTML reports. Responsive dark-mode UI. Deployed on Hugging Face Spaces.
+        Production web app: dual-image upload, case library with keyboard shortcuts, probability bars, ensemble breakdown,
+        Grad-CAM explainability, radial halo chart, clinical protocol engine, Reese's Law context, downloadable HTML reports.
+        Responsive dark-mode UI. Weights bundled in repo — runs offline via <code>./scripts/run.sh</code>.
       </div>
       <div class="rubric-card">
         <strong>3. Coding excellence</strong>
-        Ensemble of OpenCV radial halo profiling + DualViewNet (PyTorch) with battery-weighted loss. Source: GitHub. Tests: <code>python3 tests/smoke_test.py</code>. Architecture: <code>TECHNICAL.md</code>.
+        Ensemble of OpenCV radial halo profiling + DualViewNet (PyTorch) with battery-weighted loss (3×).
+        Trained on Kaggle CPU. Source on GitHub. Tests: <code>python3 tests/smoke_test.py</code>. Architecture: <code>TECHNICAL.md</code>.
       </div>
     </div>
 
     <h2>Key source files</h2>
-    <ul>
+    <ul style="padding-left:1.25rem">
       <li><code>coincell/halo_analyzer.py</code> — radial intensity profiling, Hough fallback</li>
       <li><code>coincell/models.py</code> — DualViewNet AP+lateral fusion</li>
       <li><code>coincell/inference.py</code> — ensemble + Grad-CAM + protocol</li>
       <li><code>coincell/clinical.py</code> — CRITICAL/URGENT/ROUTINE engine</li>
+      <li><code>weights/coincell.pt</code> — CPU-trained model weights (bundled)</li>
       <li><code>tests/smoke_test.py</code> — automated verification</li>
     </ul>
 
@@ -62,7 +85,7 @@
     <p>
       H.R. 5313 (117th Congress) passed the House 409–2 and became P.L. 117-171 (Reese's Law).
       CoinCell implements the diagnostic tool that Congress's prevention legislation did not include.
-      Baseline comparison: Rostad et al., Emory SPR 2020 — 81% battery sensitivity, 88% overall accuracy; never deployed clinically.
+      Baseline: Rostad et al., Emory SPR 2020 — 81% battery sensitivity, 88% overall accuracy; never deployed clinically.
     </p>
 
     <h2>Disclaimer</h2>

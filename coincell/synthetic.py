@@ -60,13 +60,18 @@ def draw_battery_ap(bg: np.ndarray, cx: int, cy: int, r: int) -> np.ndarray:
 
 
 def draw_stacked_coins_ap(bg: np.ndarray, cx: int, cy: int, r: int) -> np.ndarray:
-    """Two offset coins — classic false-halo mimic."""
+    """Two offset coins with overlapping rims — classic false double-halo mimic."""
     img = bg.copy()
-    offset = int(r * 0.22)
-    cv2.circle(img, (cx - offset, cy), r, random.uniform(0.80, 0.90), -1)
-    cv2.circle(img, (cx + offset, cy), r, random.uniform(0.80, 0.90), -1)
-    cv2.circle(img, (cx - offset, cy), r, random.uniform(0.90, 0.97), 2)
-    cv2.circle(img, (cx + offset, cy), r, random.uniform(0.90, 0.97), 2)
+    offset = int(r * 0.16)
+    d1 = random.uniform(0.78, 0.88)
+    d2 = random.uniform(0.78, 0.88)
+    cv2.circle(img, (cx - offset, cy), r, d1, -1)
+    cv2.circle(img, (cx + offset, cy), r, d2, -1)
+    # Bright overlapping rims → false double halo on AP
+    cv2.circle(img, (cx - offset, cy), r, random.uniform(0.91, 0.98), 2)
+    cv2.circle(img, (cx + offset, cy), r, random.uniform(0.91, 0.98), 2)
+    cv2.circle(img, (cx, cy), int(r * 0.72), random.uniform(0.88, 0.96), 2)
+    cv2.circle(img, (cx, cy), int(r * 0.48), random.uniform(0.42, 0.55), -1)
     return _add_noise(img)
 
 

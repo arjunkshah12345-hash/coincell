@@ -6,8 +6,8 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 
 ## Pre-recording setup
 
-1. Deploy app → have URL ready
-2. Browser zoom 100%, dark mode, close unrelated tabs
+1. Run `./scripts/run.sh` → http://localhost:7860
+2. Browser zoom 100%, close unrelated tabs
 3. Fullscreen the app window
 4. Script on second monitor (don't read robotically)
 
@@ -24,7 +24,7 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 - **Audio:** "When a toddler swallows a disc, doctors have two hours if it's a battery in the esophagus. Stacked coins fake the halo sign."
 
 ### SHOT 3 — App reveal (5 sec)
-- **Visual:** Navigate to CoinCell live URL
+- **Visual:** Navigate to localhost:7860 (or fullscreen app)
 - **Audio:** "CoinCell — AI for the diagnostic gap."
 
 ### SHOT 4 — Battery demo (20 sec)

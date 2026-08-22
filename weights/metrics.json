@@ -1,9 +1,9 @@
 {
   "coincell": {
     "battery_sensitivity": 1.0,
-    "coin_sensitivity": 0.733,
-    "stacked_coin_emergency_rate": 0.5,
-    "n_per_class": 30
+    "coin_sensitivity": 0.725,
+    "stacked_coin_emergency_rate": 0.65,
+    "n_per_class": 40
   },
   "baseline_emory_2020": {
     "source": "Emory SPR 2020 (Rostad et al.)",

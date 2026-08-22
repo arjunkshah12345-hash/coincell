@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import time
+
 import torch
 import torch.nn.functional as F
 
@@ -34,6 +36,7 @@ class CoinCellEngine:
         return {CLASS_NAMES[i]: float(probs[i]) for i in range(len(CLASS_NAMES))}
 
     def analyze(self, ap_image, lateral_image=None) -> CoinCellResult:
+        t0 = time.perf_counter()
         ap_gray = enhance_xray(load_image(ap_image))
         ap_halo = analyze_halo(ap_gray, view="ap")
 
@@ -64,12 +67,27 @@ class CoinCellEngine:
             lat_halo is None or lat_halo.stepoff_score < 0.38
         )
 
+        # Stacked coins: false halo on AP without lateral step-off (Reese's Law hard case)
+        stacked_mimic = (
+            ap_halo.center is not None
+            and ap_halo.halo_score > 0.32
+            and (lat_halo is None or lat_halo.stepoff_score < 0.35)
+            and bat_n > 0.28
+        )
+        ap_only_disc = (
+            ap_halo.center is not None
+            and lat_gray is None
+            and ap_halo.halo_score > 0.45
+        )
+        if stacked_mimic or ap_only_disc:
+            ambiguous = True
+
         if bat_n >= coin_n:
             prediction, confidence = "BATTERY", bat_n
         else:
             prediction, confidence = "COIN", coin_n
 
-        if ambiguous and bat_n > 0.35:
+        if ambiguous and (bat_n > 0.35 or stacked_mimic or ap_only_disc):
             prediction = "BATTERY — AMBIGUOUS HALO"
             confidence = max(bat_n, 0.75)
 
@@ -90,6 +108,8 @@ class CoinCellEngine:
         cam = compute_gradcam(model, ap_t, target_class=0, device=self.device)
         gradcam = overlay_gradcam(ap_gray, cam)
 
+        elapsed_ms = (time.perf_counter() - t0) * 1000
+
         return CoinCellResult(
             prediction=prediction,
             confidence=float(confidence),
@@ -107,6 +127,7 @@ class CoinCellEngine:
             overlay_b64=numpy_to_b64(overlay),
             gradcam_b64=numpy_to_b64(gradcam),
             dual_view_used=dual_used,
+            inference_ms=elapsed_ms,
         )
 
 

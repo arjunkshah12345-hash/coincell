@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import io
+import json
 import time
 from contextlib import asynccontextmanager
-from functools import lru_cache
 from pathlib import Path
 
 import cv2
@@ -18,22 +18,24 @@ from coincell.evaluate import evaluate_on_synthetic
 from coincell.inference import get_engine
 from coincell.report import generate_html_report
 from coincell.synthetic import generate_sample
+from coincell.visualize import numpy_to_b64
 
-STATIC = Path(__file__).resolve().parent.parent / "static"
+ROOT = Path(__file__).resolve().parent.parent
+STATIC = ROOT / "static"
+METRICS_FILE = ROOT / "weights" / "metrics.json"
 
 _metrics_cache: dict | None = None
 _metrics_cache_time: float = 0
-METRICS_TTL = 3600  # 1 hour
+METRICS_TTL = 3600
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Warm up model on startup so first user request is fast
     get_engine()
     yield
 
 
-app = FastAPI(title="CoinCell API", version="2.1.0", lifespan=lifespan)
+app = FastAPI(title="CoinCell API", version="2.2.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -47,7 +49,7 @@ def _read_upload(f: UploadFile | None) -> np.ndarray | None:
     return np.array(img)
 
 
-def _run_demo(case: str):
+def _demo_spec(case: str) -> tuple[int, bool]:
     mapping = {
         "battery": (0, True),
         "coin": (1, False),
@@ -56,7 +58,16 @@ def _run_demo(case: str):
     }
     if case not in mapping:
         raise HTTPException(404, f"Unknown case: {case}. Try: battery, coin, stacked, normal")
-    label, with_lat = mapping[case]
+    return mapping[case]
+
+
+def _gray_to_b64(gray: np.ndarray) -> str:
+    rgb = cv2.cvtColor((gray * 255).astype(np.uint8), cv2.COLOR_GRAY2RGB)
+    return numpy_to_b64(rgb)
+
+
+def _run_demo(case: str):
+    label, with_lat = _demo_spec(case)
     ap = generate_sample(label, seed=42)
     ap_rgb = cv2.cvtColor((ap * 255).astype(np.uint8), cv2.COLOR_GRAY2RGB)
     lat_rgb = None
@@ -64,6 +75,12 @@ def _run_demo(case: str):
         lat = generate_sample(0, lateral=True, seed=43)
         lat_rgb = cv2.cvtColor((lat * 255).astype(np.uint8), cv2.COLOR_GRAY2RGB)
     return get_engine().analyze(ap_rgb, lat_rgb)
+
+
+def _bundled_metrics() -> dict | None:
+    if METRICS_FILE.exists():
+        return json.loads(METRICS_FILE.read_text())
+    return None
 
 
 @app.get("/judge")
@@ -111,8 +128,18 @@ async def report(
 
 @app.get("/api/demo/{case}")
 async def demo(case: str):
-    result = _run_demo(case)
-    return result.to_dict()
+    return _run_demo(case).to_dict()
+
+
+@app.get("/api/demo/{case}/previews")
+async def demo_previews(case: str):
+    label, with_lat = _demo_spec(case)
+    ap = generate_sample(label, seed=42)
+    out = {"ap_b64": _gray_to_b64(ap), "lateral_b64": None}
+    if with_lat and label == 0:
+        lat = generate_sample(0, lateral=True, seed=43)
+        out["lateral_b64"] = _gray_to_b64(lat)
+    return out
 
 
 @app.get("/api/demo/{case}/report")
@@ -127,10 +154,38 @@ async def demo_report(case: str):
 @app.get("/api/cases")
 async def cases():
     return [
-        {"id": "battery", "title": "Button battery (AP + lateral)", "description": "Classic double halo + step-off"},
-        {"id": "coin", "title": "Single coin", "description": "Homogeneous disc density"},
-        {"id": "stacked", "title": "Stacked coins", "description": "False halo mimic — should trigger emergency"},
-        {"id": "normal", "title": "Normal study", "description": "No foreign body"},
+        {
+            "id": "battery",
+            "title": "Button battery",
+            "subtitle": "AP + lateral",
+            "description": "Classic double halo with lateral step-off morphology",
+            "urgency": "critical",
+            "shortcut": "1",
+        },
+        {
+            "id": "coin",
+            "title": "Single coin",
+            "subtitle": "AP only",
+            "description": "Homogeneous disc density without step-off",
+            "urgency": "routine",
+            "shortcut": "2",
+        },
+        {
+            "id": "stacked",
+            "title": "Stacked coins",
+            "subtitle": "Hard case",
+            "description": "False double halo — must still trigger emergency protocol",
+            "urgency": "critical",
+            "shortcut": "3",
+        },
+        {
+            "id": "normal",
+            "title": "Normal study",
+            "subtitle": "No foreign body",
+            "description": "Negative pediatric chest radiograph",
+            "urgency": "routine",
+            "shortcut": "4",
+        },
     ]
 
 
@@ -140,6 +195,12 @@ async def metrics(refresh: bool = False):
     now = time.time()
     if not refresh and _metrics_cache and (now - _metrics_cache_time) < METRICS_TTL:
         return _metrics_cache
+    if not refresh:
+        bundled = _bundled_metrics()
+        if bundled:
+            _metrics_cache = bundled
+            _metrics_cache_time = now
+            return bundled
     _metrics_cache = evaluate_on_synthetic(n=40)
     _metrics_cache_time = now
     return _metrics_cache
@@ -147,7 +208,14 @@ async def metrics(refresh: bool = False):
 
 @app.get("/api/health")
 async def health():
-    return {"status": "ok", "version": "2.1.0", "model": "loaded"}
+    bundled = _bundled_metrics()
+    return {
+        "status": "ok",
+        "version": "2.2.0",
+        "model": "loaded",
+        "weights": "bundled" if (ROOT / "weights" / "coincell.pt").exists() else "custom",
+        "metrics": bundled is not None,
+    }
 
 
 if STATIC.exists():

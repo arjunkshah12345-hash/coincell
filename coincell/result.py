@@ -24,6 +24,7 @@ class CoinCellResult:
     overlay_b64: str
     gradcam_b64: str
     dual_view_used: bool
+    inference_ms: float = 0.0
 
     def to_dict(self) -> dict:
         d = asdict(self)
