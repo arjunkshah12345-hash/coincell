@@ -1,4 +1,4 @@
-# CoinCell — Pre-Submit Checklist (No Hugging Face)
+# CoinCell — Pre-Submit Checklist
 
 **Deadline: October 26, 2026 · 12:00 PM Eastern**
 
@@ -6,30 +6,31 @@
 
 ## Done ✅
 
-- [x] App built + weights in `weights/coincell.pt` (3.5 MB, CPU-trained)
+- [x] **Live website:** https://coincell.vercel.app
+- [x] **Interactive demo:** https://coincell.vercel.app/demo
+- [x] **Judge guide:** https://coincell.vercel.app/judges
 - [x] GitHub: https://github.com/arjunkshah12345-hash/coincell
 - [x] Kaggle training: https://www.kaggle.com/code/aks1321/coincell-train-cpu
-- [x] 100% battery sensitivity vs 81% Emory baseline (`weights/metrics.json`)
-- [x] `./scripts/run.sh` → local demo at http://localhost:7860
+- [x] Weights in repo · 100% battery sensitivity vs 81% Emory baseline
+- [x] Full app: `./scripts/run.sh` → localhost:7860
 
 ---
 
 ## Submit checklist
 
-- [ ] `./scripts/run.sh` works on your machine
-- [ ] Record demo video (`VIDEO.md`) showing live app
+- [ ] Open https://coincell.vercel.app/demo — press 1 and 3
+- [ ] Record demo video (`VIDEO.md`) showing live site + stacked coins case
 - [ ] Paste answers from `SUBMISSION_FORM.md`
 - [ ] Submit at https://www.congressionalappchallenge.us/
-
-**Demo URL for form:** GitHub repo + Kaggle training notebook links (CAC allows source + video)
 
 ---
 
 ## Commands
 
 ```bash
-./scripts/run.sh                    # run app
-python3 scripts/train_cpu.py        # re-train locally
-kaggle kernels push -p kaggle       # re-train on Kaggle CPU
+./scripts/run.sh                    # full local app
 python3 tests/smoke_test.py         # verify code
+cd website && npm run dev           # local marketing site
+python3 scripts/export_demo_assets.py  # refresh vercel demo
+vercel --prod --cwd website         # redeploy site
 ```

@@ -41,7 +41,8 @@ The core difficulty is stacked coins creating false "double halo" patterns on AP
 
 | Field | URL |
 |-------|-----|
-| **Live demo** | https://github.com/arjunkshah12345-hash/coincell — clone & run `./scripts/run.sh` (shown in demo video) |
+| **Live demo** | https://coincell.vercel.app/demo |
+| **Website** | https://coincell.vercel.app |
 | **Training** | https://www.kaggle.com/code/aks1321/coincell-train-cpu |
 | **Source code** | https://github.com/arjunkshah12345-hash/coincell ✅ |
 | **Demo video** | YouTube unlisted/public link *(record using VIDEO.md)* |

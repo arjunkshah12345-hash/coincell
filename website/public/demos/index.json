@@ -1,0 +1,21 @@
+{
+  "cases": [
+    {
+      "id": "battery",
+      "title": "Battery"
+    },
+    {
+      "id": "coin",
+      "title": "Coin"
+    },
+    {
+      "id": "stacked",
+      "title": "Stacked"
+    },
+    {
+      "id": "normal",
+      "title": "Normal"
+    }
+  ],
+  "version": "2.2.0"
+}

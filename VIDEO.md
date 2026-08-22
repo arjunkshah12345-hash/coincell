@@ -24,7 +24,7 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 - **Audio:** "When a toddler swallows a disc, doctors have two hours if it's a battery in the esophagus. Stacked coins fake the halo sign."
 
 ### SHOT 3 — App reveal (5 sec)
-- **Visual:** Navigate to localhost:7860 (or fullscreen app)
+- **Visual:** Navigate to **https://coincell.vercel.app**
 - **Audio:** "CoinCell — AI for the diagnostic gap."
 
 ### SHOT 4 — Battery demo (20 sec)

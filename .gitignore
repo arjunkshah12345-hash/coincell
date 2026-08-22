@@ -1,10 +1,14 @@
+*.pt
+!weights/coincell.pt
+*.pth
 __pycache__/
 *.py[cod]
 .venv/
 venv/
-*.pt
-!weights/coincell.pt
-*.pth
 /tmp/
 .DS_Store
 .env
+website/node_modules/
+website/.next/
+website/.vercel/
+website/.env.local
