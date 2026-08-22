@@ -6,11 +6,11 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-from coincell.synthetic import generate_sample
+from haloscan.synthetic import generate_sample
 
 
 def _get_engine():
-    from coincell.inference import get_engine
+    from haloscan.inference import get_engine
     return get_engine()
 
 
@@ -66,7 +66,7 @@ def evaluate_on_synthetic(n: int = 100) -> dict:
     amb_rate = ambiguous_correct / max(1, ambiguous_total)
 
     return {
-        "coincell": {
+        "haloscan": {
             "battery_sensitivity": round(bat_sens, 3),
             "coin_sensitivity": round(coin_sens, 3),
             "stacked_coin_emergency_rate": round(amb_rate, 3),
@@ -81,7 +81,7 @@ def main():
     import argparse
 
     p = argparse.ArgumentParser()
-    p.add_argument("--out", default="/tmp/coincell/metrics.json")
+    p.add_argument("--out", default="/tmp/haloscan/metrics.json")
     p.add_argument("--n", type=int, default=80)
     args = p.parse_args()
     metrics = evaluate_on_synthetic(n=args.n)

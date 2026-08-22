@@ -105,8 +105,49 @@ h1, h2, h3 {
 }
 
 .hero { margin-bottom: 72px; }
-.hero h1 { margin-bottom: 24px; font-size: 13px; }
-.hero-lead { max-width: 520px; margin: 0; color: var(--muted); }
+.hero h1 { margin-bottom: 8px; font-size: 13px; letter-spacing: 0.02em; }
+
+.hero-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.hero-logo {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.halo-ring {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--text);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.halo-ring.r2 { inset: 6px; opacity: 0.55; }
+.halo-ring.r3 {
+  inset: 13px;
+  background: var(--text);
+  opacity: 1;
+  border: none;
+}
+
+.hero-tag {
+  color: var(--text);
+  margin: 0 0 16px;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+.hero-lead { max-width: 520px; margin: 0; color: var(--muted); line-height: 1.65; }
+
+.prose { line-height: 1.7; max-width: 520px; }
+.prose .text { color: var(--text); font-weight: 400; }
 
 section { margin-bottom: 72px; }
 

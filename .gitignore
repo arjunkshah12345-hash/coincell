@@ -1,4 +1,5 @@
 *.pt
+!weights/haloscan.pt
 !weights/coincell.pt
 *.pth
 __pycache__/

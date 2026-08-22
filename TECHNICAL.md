@@ -1,4 +1,4 @@
-# CoinCell — Technical Documentation
+# Haloscan — Technical Documentation
 
 For Congressional App Challenge judges evaluating **coding depth**.
 
@@ -30,7 +30,7 @@ After Reese's Law (P.L. 117-171), button battery packaging became child-resistan
 
 ### 2. Neural network layer (`models.py`)
 
-- **CoinCellNet:** Single-view 3-block CNN (32→64→128 channels)
+- **HaloscanNet:** Single-view 3-block CNN (32→64→128 channels)
 - **DualViewNet:** Twin encoders + fusion MLP — lateral view reduces stacked-coin false positives
 - **Battery-weighted loss:** `CrossEntropyLoss(weights=[3.0, 1.0, 0.5])` — missing a battery costs 3× more than missing a coin
 
@@ -52,11 +52,11 @@ Rule-based engine mapping probability + ambiguity → CRITICAL / URGENT / ROUTIN
 
 ## Training data & Kaggle pipeline
 
-Synthetic generator (`synthetic.py`) — no PHI, no downloads. **All training on Kaggle GPU** via `kaggle/coincell_train.ipynb`:
+Synthetic generator (`synthetic.py`) — no PHI, no downloads. **All training on Kaggle GPU** via `kaggle/haloscan_train.ipynb`:
 
 1. Clone repo to `/kaggle/working/` only
 2. Train DualViewNet (400 samples/class, 20 epochs, battery-weighted loss)
-3. Upload `coincell.pt` + `metrics.json` to Hugging Face Hub
+3. Upload `haloscan.pt` + `metrics.json` to Hugging Face Hub
 4. HF Spaces inference pulls weights — never trains locally
 
 See `kaggle/README.md`.

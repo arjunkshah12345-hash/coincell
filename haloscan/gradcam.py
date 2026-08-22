@@ -5,11 +5,11 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from coincell.models import CoinCellNet, DualViewNet
+from haloscan.models import HaloscanNet, DualViewNet
 
 
 def compute_gradcam(
-    model: CoinCellNet | DualViewNet,
+    model: HaloscanNet | DualViewNet,
     tensor: torch.Tensor,
     target_class: int,
     device: str,
@@ -24,7 +24,7 @@ def compute_gradcam(
         activations.append(out)
         out.retain_grad()
 
-    handle = model.encoder.blocks[-1].register_forward_hook(fwd_hook) if isinstance(model, CoinCellNet) else \
+    handle = model.encoder.blocks[-1].register_forward_hook(fwd_hook) if isinstance(model, HaloscanNet) else \
         model.ap_encoder.blocks[-1].register_forward_hook(fwd_hook)
 
     try:

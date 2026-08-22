@@ -10,8 +10,8 @@ from huggingface_hub import HfApi, create_repo
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--weights", default="/tmp/coincell/coincell.pt")
-    p.add_argument("--repo", default="arjunkshah12345-hash/coincell-weights")
+    p.add_argument("--weights", default="/tmp/haloscan/haloscan.pt")
+    p.add_argument("--repo", default="arjunkshah12345-hash/haloscan-weights")
     args = p.parse_args()
     weights = Path(args.weights)
     if not weights.exists():
@@ -21,10 +21,10 @@ def main():
     api = HfApi()
     api.upload_file(
         path_or_fileobj=str(weights),
-        path_in_repo="coincell.pt",
+        path_in_repo="haloscan.pt",
         repo_id=args.repo,
         repo_type="model",
-        commit_message="CoinCell ensemble weights",
+        commit_message="Haloscan ensemble weights",
     )
     print(f"Uploaded → https://huggingface.co/{args.repo}")
 

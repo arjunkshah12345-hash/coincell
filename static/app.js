@@ -187,7 +187,7 @@ async function downloadReport() {
     const blob = new Blob([html], { type: "text/html" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `coincell-report-${Date.now()}.html`;
+    a.download = `haloscan-report-${Date.now()}.html`;
     a.click();
     toast("Report downloaded", "success");
   } catch (e) {
@@ -200,7 +200,7 @@ async function downloadReport() {
 function copySummary() {
   if (!lastResult) return;
   const text = [
-    `CoinCell: ${lastResult.prediction}`,
+    `Haloscan: ${lastResult.prediction}`,
     `Battery ${(lastResult.battery_probability * 100).toFixed(0)}% / Coin ${(lastResult.coin_probability * 100).toFixed(0)}%`,
     lastResult.explanation,
     lastResult.emergency ? "TREAT AS EMERGENCY — 2hr endoscopy window" : "",
@@ -288,10 +288,10 @@ async function loadMetrics(refresh = false) {
   try {
     const url = refresh ? "/api/metrics?refresh=true" : "/api/metrics";
     const m = await fetch(url).then((r) => r.json());
-    const c = m.coincell;
+    const c = m.haloscan;
     const b = m.baseline_emory_2020;
     $("#metrics-content").innerHTML = `
-      <div class="metric-row"><span>CoinCell battery sens.</span><strong>${(c.battery_sensitivity * 100).toFixed(0)}%</strong></div>
+      <div class="metric-row"><span>Haloscan battery sens.</span><strong>${(c.battery_sensitivity * 100).toFixed(0)}%</strong></div>
       <div class="metric-row"><span>Emory 2020 baseline</span><strong>${(b.battery_sensitivity * 100).toFixed(0)}%</strong></div>
       <div class="metric-row"><span>Stacked-coin catch rate</span><strong>${(c.stacked_coin_emergency_rate * 100).toFixed(0)}%</strong></div>
       <div class="metric-row"><span>Beats baseline</span><strong>${m.beats_baseline_battery_sensitivity ? "✓ Yes" : "—"}</strong></div>

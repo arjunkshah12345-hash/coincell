@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENV COINCELL_WEIGHTS=/tmp/coincell/coincell.pt
+ENV COINCELL_WEIGHTS=/tmp/haloscan/haloscan.pt
 EXPOSE 7860
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \

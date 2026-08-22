@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, asdict
 
-from coincell.clinical import ClinicalProtocol
-from coincell.halo_analyzer import HaloAnalysis
+from haloscan.clinical import ClinicalProtocol
+from haloscan.halo_analyzer import HaloAnalysis
 
 
 @dataclass
-class CoinCellResult:
+class HaloscanResult:
     prediction: str
     confidence: float
     battery_probability: float

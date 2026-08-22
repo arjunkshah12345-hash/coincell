@@ -10,19 +10,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from coincell import classifier
-from coincell.classifier import save_models, train_models
+from haloscan import classifier
+from haloscan.classifier import save_models, train_models
 
 
 def main():
-    out_dir = Path(os.environ.get("COINCELL_OUT", "/tmp/coincell"))
+    out_dir = Path(os.environ.get("HALOSCAN_OUT") or os.environ.get("COINCELL_OUT", "/tmp/haloscan"))
     out_dir.mkdir(parents=True, exist_ok=True)
-    weights = out_dir / "coincell.pt"
+    weights = out_dir / "haloscan.pt"
     metrics_path = out_dir / "metrics.json"
 
-    n = int(os.environ.get("COINCELL_N_PER_CLASS", "100"))
-    epochs = int(os.environ.get("COINCELL_EPOCHS", "6"))
-    batch = int(os.environ.get("COINCELL_BATCH", "32"))
+    n = int(os.environ.get("HALOSCAN_N_PER_CLASS") or os.environ.get("COINCELL_N_PER_CLASS", "100"))
+    epochs = int(os.environ.get("HALOSCAN_EPOCHS") or os.environ.get("COINCELL_EPOCHS", "6"))
+    batch = int(os.environ.get("HALOSCAN_BATCH") or os.environ.get("COINCELL_BATCH", "32"))
 
     orig = classifier.build_dataset
     classifier.build_dataset = lambda n_per_class=n, size=224, dual=True: orig(
@@ -34,11 +34,11 @@ def main():
     save_models(single, dual, weights)
     print(f"Saved {weights} ({weights.stat().st_size / 1024:.0f} KB)")
 
-    os.environ["COINCELL_WEIGHTS"] = str(weights)
-    import coincell.inference as inf
+    os.environ["HALOSCAN_WEIGHTS"] = str(weights)
+    import haloscan.inference as inf
 
     inf._engine = None
-    from coincell.evaluate import evaluate_on_synthetic
+    from haloscan.evaluate import evaluate_on_synthetic
 
     metrics = evaluate_on_synthetic(n=30)
     metrics_path.write_text(json.dumps(metrics, indent=2))
@@ -49,15 +49,15 @@ def main():
     if token:
         try:
             from huggingface_hub import HfApi, create_repo
-            repo = os.environ.get("COINCELL_HF_REPO", "arjunkshah12345-hash/coincell-weights")
+            repo = os.environ.get("COINCELL_HF_REPO", "arjunkshah12345-hash/haloscan-weights")
             api = HfApi(token=token)
             create_repo(repo, repo_type="model", exist_ok=True)
-            api.upload_file(str(weights), "coincell.pt", repo_id=repo, repo_type="model")
+            api.upload_file(str(weights), "haloscan.pt", repo_id=repo, repo_type="model")
             api.upload_file(str(metrics_path), "metrics.json", repo_id=repo, repo_type="model")
             print(f"Optional HF upload → https://huggingface.co/{repo}")
         except Exception as e:
             print(f"HF upload skipped: {e}")
-    print(f"Copy to repo: cp {weights} weights/coincell.pt")
+    print(f"Copy to repo: cp {weights} weights/haloscan.pt")
 
 
 if __name__ == "__main__":

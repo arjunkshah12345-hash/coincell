@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Push CoinCell to GitHub (arjunkshah12345-hash per account routing)
+# Push Haloscan to GitHub (arjunkshah12345-hash per account routing)
 set -euo pipefail
-REPO="${1:-coincell}"
+REPO="${1:-haloscan}"
 USER="arjunkshah12345-hash"
 
 gh auth switch --user "$USER" 2>/dev/null || true
 
 if ! gh repo view "$USER/$REPO" &>/dev/null; then
   gh repo create "$USER/$REPO" --public --source=. --remote=origin \
-    --description "CoinCell — pediatric battery vs coin X-ray AI (Congressional App Challenge)"
+    --description "Haloscan — pediatric battery vs coin X-ray AI (Congressional App Challenge)"
 else
   git remote remove origin 2>/dev/null || true
   git remote add origin "https://github.com/$USER/$REPO.git"

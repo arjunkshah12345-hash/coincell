@@ -1,4 +1,4 @@
-# CoinCell Training on Kaggle
+# Haloscan Training on Kaggle
 
 **All model training happens on Kaggle GPU.** Nothing else in your Kaggle account is touched — you only create one new notebook.
 
@@ -7,7 +7,7 @@
 ## Step 1 — Create a NEW notebook (don't edit existing ones)
 
 1. Go to https://www.kaggle.com/code → **New Notebook**
-2. Name it: `coincell-train` (or anything)
+2. Name it: `haloscan-train` (or anything)
 3. **Settings** (right panel):
    - **Accelerator → GPU T4 x2** (or P100)
    - **Internet → ON**
@@ -19,7 +19,7 @@
 ## Step 2 — Upload the training notebook
 
 **Option A — Upload file**
-- Download/upload `kaggle/coincell_train.ipynb` from this repo
+- Download/upload `kaggle/haloscan_train.ipynb` from this repo
 - File → Upload notebook
 
 **Option B — Copy from GitHub**
@@ -30,13 +30,13 @@
 ## Step 3 — Run All
 
 The notebook will:
-1. Clone CoinCell source into `/kaggle/working/coincell-src` (isolated)
-2. Train DualViewNet + CoinCellNet on synthetic X-rays (GPU)
+1. Clone Haloscan source into `/kaggle/working/haloscan-src` (isolated)
+2. Train DualViewNet + HaloscanNet on synthetic X-rays (GPU)
 3. Evaluate vs Emory 2020 baseline
-4. Save `coincell.pt` + `metrics.json` to `/kaggle/working/`
-5. Upload weights to **Hugging Face Hub** → `arjunkshah12345-hash/coincell-weights`
+4. Save `haloscan.pt` + `metrics.json` to `/kaggle/working/`
+5. Upload weights to **Hugging Face Hub** → `arjunkshah12345-hash/haloscan-weights`
 
-**Output:** https://huggingface.co/arjunkshah12345-hash/coincell-weights
+**Output:** https://huggingface.co/arjunkshah12345-hash/haloscan-weights
 
 ---
 
@@ -57,8 +57,8 @@ The live app downloads Kaggle-trained weights automatically — no training on y
 
 | Path | Contents |
 |------|----------|
-| `/kaggle/working/coincell-src/` | Cloned repo (temporary) |
-| `/kaggle/working/coincell.pt` | Trained weights |
+| `/kaggle/working/haloscan-src/` | Cloned repo (temporary) |
+| `/kaggle/working/haloscan.pt` | Trained weights |
 | `/kaggle/working/metrics.json` | Benchmark results |
 
 Nothing is added to your existing Kaggle datasets, models, or notebooks.

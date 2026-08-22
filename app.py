@@ -1,4 +1,4 @@
-"""CoinCell entrypoint — FastAPI clinical UI on port 7860 (HF Spaces compatible)."""
+"""Haloscan entrypoint — FastAPI clinical UI on port 7860 (HF Spaces compatible)."""
 
 import os
 

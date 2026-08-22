@@ -9,7 +9,7 @@ export default function JudgesPage() {
       <header className="hero">
         <h1>judge guide</h1>
         <p className="hero-lead">
-          90-second verification for congressional app challenge 2026. coincell addresses the diagnostic
+          90-second verification for congressional app challenge 2026. haloscan addresses the diagnostic
           gap reese&apos;s law (p.l. 117-171) did not cover.
         </p>
       </header>
@@ -38,7 +38,7 @@ export default function JudgesPage() {
             <h3>idea</h3>
             <div>
               <p>
-                reese&apos;s law fixed prevention; coincell fixes diagnosis. named clinical failure mode
+                reese&apos;s law fixed prevention; haloscan fixes diagnosis. named clinical failure mode
                 (stacked coins / false halo). 2-hour esophageal emergency window.
               </p>
             </div>
@@ -68,16 +68,16 @@ export default function JudgesPage() {
         <p className="label">key files</p>
         <ul className="list">
           {[
-            ["coincell/halo_analyzer.py", "radial halo profiling"],
-            ["coincell/models.py", "DualViewNet fusion"],
-            ["coincell/inference.py", "ensemble + grad-cam"],
-            ["coincell/clinical.py", "protocol engine"],
-            ["weights/coincell.pt", "bundled model weights"],
+            ["haloscan/halo_analyzer.py", "radial halo profiling"],
+            ["haloscan/models.py", "DualViewNet fusion"],
+            ["haloscan/inference.py", "ensemble + grad-cam"],
+            ["haloscan/clinical.py", "protocol engine"],
+            ["weights/haloscan.pt", "bundled model weights"],
             ["tests/smoke_test.py", "automated verification"],
           ].map(([file, desc]) => (
             <li key={file}>
               <a
-                href={`https://github.com/arjunkshah12345-hash/coincell/blob/main/${file}`}
+                href={`https://github.com/arjunkshah12345-hash/haloscan/blob/main/${file}`}
                 className="row-link"
                 target="_blank"
                 rel="noopener noreferrer"

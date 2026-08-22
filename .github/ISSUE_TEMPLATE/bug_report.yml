@@ -1,5 +1,5 @@
 name: Bug report
-about: Report a bug in CoinCell
+about: Report a bug in Haloscan
 labels: bug
 body:
   - type: textarea

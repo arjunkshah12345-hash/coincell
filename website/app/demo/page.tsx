@@ -190,7 +190,7 @@ export default function DemoPage() {
 
       <footer>
         <span>⚠ decision support only</span>
-        <a href="https://github.com/arjunkshah12345-hash/coincell">full app on github ↗</a>
+        <a href="https://github.com/arjunkshah12345-hash/haloscan">full app on github ↗</a>
       </footer>
     </div>
   );

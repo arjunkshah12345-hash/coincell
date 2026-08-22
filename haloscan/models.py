@@ -39,7 +39,7 @@ class ViewEncoder(nn.Module):
         return self.pool(self.blocks(x)).flatten(1)
 
 
-class CoinCellNet(nn.Module):
+class HaloscanNet(nn.Module):
     """Single-view classifier with feature hooks for Grad-CAM."""
 
     def __init__(self, num_classes: int = 3):

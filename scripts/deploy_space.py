@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One-command Hugging Face Space deploy for CoinCell."""
+"""One-command Hugging Face Space deploy for Haloscan."""
 from __future__ import annotations
 
 import subprocess
@@ -7,14 +7,14 @@ import sys
 
 
 def main():
-    repo = "arjunkshah12345-hash/coincell"
+    repo = "arjunkshah12345-hash/haloscan"
     cmds = [
         [sys.executable, "-m", "huggingface_hub.cli.hf", "auth", "whoami"],
         [sys.executable, "-m", "huggingface_hub.cli.hf", "repo", "create", repo, "--type", "space", "--space-sdk", "docker", "--exist-ok"],
         [sys.executable, "-m", "huggingface_hub.cli.hf", "upload", repo, ".", "--repo-type", "space",
          "--exclude", ".git/*", ".venv/*", "__pycache__/*", "*.pt"],
     ]
-    print("CoinCell → Hugging Face Spaces\n")
+    print("Haloscan → Hugging Face Spaces\n")
     r = subprocess.run(cmds[0], capture_output=True, text=True)
     if r.returncode != 0:
         print("Not logged in. Run first:")

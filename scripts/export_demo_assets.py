@@ -13,9 +13,9 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "website" / "public" / "demos"
 sys.path.insert(0, str(ROOT))
 
-from coincell.inference import get_engine  # noqa: E402
-from coincell.synthetic import generate_sample  # noqa: E402
-from coincell.visualize import numpy_to_b64  # noqa: E402
+from haloscan.inference import get_engine  # noqa: E402
+from haloscan.synthetic import generate_sample  # noqa: E402
+from haloscan.visualize import numpy_to_b64  # noqa: E402
 
 
 CASES = {

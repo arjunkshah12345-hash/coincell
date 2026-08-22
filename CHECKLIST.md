@@ -1,4 +1,4 @@
-# CoinCell — Pre-Submit Checklist
+# Haloscan — Pre-Submit Checklist
 
 **Deadline: October 26, 2026 · 12:00 PM Eastern**
 
@@ -6,31 +6,26 @@
 
 ## Done ✅
 
-- [x] **Live website:** https://coincell.vercel.app
-- [x] **Interactive demo:** https://coincell.vercel.app/demo
-- [x] **Judge guide:** https://coincell.vercel.app/judges
-- [x] GitHub: https://github.com/arjunkshah12345-hash/coincell
-- [x] Kaggle training: https://www.kaggle.com/code/aks1321/coincell-train-cpu
-- [x] Weights in repo · 100% battery sensitivity vs 81% Emory baseline
-- [x] Full app: `./scripts/run.sh` → localhost:7860
+- [x] **Live site:** https://haloscan.vercel.app
+- [x] **Demo:** https://haloscan.vercel.app/demo
+- [x] **Judges:** https://haloscan.vercel.app/judges
+- [x] **GitHub:** https://github.com/arjunkshah12345-hash/haloscan
+- [x] 100% battery sensitivity vs 81% Emory baseline
+- [x] Full app: `./scripts/run.sh`
 
 ---
 
-## Submit checklist
+## Before submit
 
-- [ ] Open https://coincell.vercel.app/demo — press 1 and 3
-- [ ] Record demo video (`VIDEO.md`) showing live site + stacked coins case
-- [ ] Paste answers from `SUBMISSION_FORM.md`
+- [ ] Demo: press **1** (battery) and **3** (stacked coins)
+- [ ] Record video (`VIDEO.md`) with **haloscan.vercel.app** on screen
+- [ ] Paste `SUBMISSION_FORM.md` → app name **Haloscan**
 - [ ] Submit at https://www.congressionalappchallenge.us/
 
 ---
 
-## Commands
-
 ```bash
-./scripts/run.sh                    # full local app
-python3 tests/smoke_test.py         # verify code
-cd website && npm run dev           # local marketing site
-python3 scripts/export_demo_assets.py  # refresh vercel demo
-vercel --prod --cwd website         # redeploy site
+./scripts/run.sh
+python3 tests/smoke_test.py
+cd website && vercel --prod
 ```

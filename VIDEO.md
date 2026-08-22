@@ -1,4 +1,4 @@
-# CoinCell — Video Shot List (2:15 target)
+# Haloscan — Video Shot List (2:15 target)
 
 Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 
@@ -6,7 +6,7 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 
 ## Pre-recording setup
 
-1. Run `./scripts/run.sh` → http://localhost:7860
+1. Run `./scripts/run.sh` OR use **https://haloscan.vercel.app/demo**
 2. Browser zoom 100%, close unrelated tabs
 3. Fullscreen the app window
 4. Script on second monitor (don't read robotically)
@@ -24,8 +24,8 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 - **Audio:** "When a toddler swallows a disc, doctors have two hours if it's a battery in the esophagus. Stacked coins fake the halo sign."
 
 ### SHOT 3 — App reveal (5 sec)
-- **Visual:** Navigate to **https://coincell.vercel.app**
-- **Audio:** "CoinCell — AI for the diagnostic gap."
+- **Visual:** Navigate to **https://haloscan.vercel.app**
+- **Audio:** "Haloscan — AI for the diagnostic gap."
 
 ### SHOT 4 — Battery demo (20 sec)
 - **Visual:** Click **Battery** quick case
@@ -35,14 +35,14 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 ### SHOT 5 — Stacked coins (20 sec)
 - **Visual:** Click **Stacked coins**
 - **Show:** Ambiguous halo, still emergency
-- **Audio:** "This is the hard case — stacked coins mimic batteries. CoinCell flags treat-as-emergency anyway."
+- **Audio:** "This is the hard case — stacked coins mimic batteries. Haloscan flags treat-as-emergency anyway."
 
 ### SHOT 6 — Explainability (15 sec)
 - **Visual:** Scroll to Grad-CAM + radial profile images
 - **Audio:** "Grad-CAM shows model focus. Radial profile quantifies the halo sign from first principles."
 
 ### SHOT 7 — Code flash (12 sec)
-- **Visual:** Open GitHub → `coincell/models.py` DualViewNet → `halo_analyzer.py`
+- **Visual:** Open GitHub → `haloscan/models.py` DualViewNet → `halo_analyzer.py`
 - **Audio:** "Dual-view fusion network plus OpenCV halo physics. Battery-weighted loss — never miss a battery."
 
 ### SHOT 8 — Report (10 sec)
@@ -55,14 +55,14 @@ Record screen + voiceover. Use QuickTime or OBS. Mic > camera quality.
 
 ### SHOT 10 — Close (13 sec)
 - **Visual:** Homepage with URL visible + GitHub link
-- **Audio:** "CoinCell. Reese's Law fixed prevention. This fixes diagnosis. Link in submission."
+- **Audio:** "Haloscan. Reese's Law fixed prevention. This fixes diagnosis. Link in submission."
 
 ---
 
 ## Post-production (minimal)
 
 - Trim dead air at start/end
-- Optional: 3 sec title card "CoinCell · Congressional App Challenge 2026"
+- Optional: 3 sec title card "Haloscan · Congressional App Challenge 2026"
 - Export 1080p, upload YouTube (public or unlisted)
 - **Do NOT** add music that drowns voiceover
 

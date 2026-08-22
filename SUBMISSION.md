@@ -1,4 +1,4 @@
-# CoinCell — 3-Minute Demo Video Script (v2)
+# Haloscan — 3-Minute Demo Video Script (v2)
 
 **Record the live HF Space UI** — dark clinical interface, not a basic form.
 
@@ -10,7 +10,7 @@
 
 ## 0:25–0:55 — Live app walkthrough
 
-- Open CoinCell URL
+- Open Haloscan URL
 - Click **Battery** demo → show verdict, probability bars, Grad-CAM heatmap, radial halo chart
 - Point to **CRITICAL protocol** panel: 2-hour window, endoscopy checklist, Poison Control number
 
@@ -24,16 +24,16 @@
 
 ## 1:30–2:00 — Benchmark
 
-- Scroll to metrics panel: CoinCell vs Emory 2020 baseline
+- Scroll to metrics panel: Haloscan vs Emory 2020 baseline
 > "We beat the published 81% battery sensitivity on our validation suite — and we catch stacked-coin false halos the paper didn't address."
 
 ## 2:00–2:30 — Impact
 
-> "Reese's Law fixed prevention. CoinCell fixes diagnosis — for rural ERs, tele-radiology, 2 AM when the pediatric radiologist isn't there."
+> "Reese's Law fixed prevention. Haloscan fixes diagnosis — for rural ERs, tele-radiology, 2 AM when the pediatric radiologist isn't there."
 
 ## 2:30–3:00 — Close
 
-> "CoinCell. Decision support for pediatrics' highest-stakes window. GitHub, live demo, Congressional App Challenge 2026."
+> "Haloscan. Decision support for pediatrics' highest-stakes window. GitHub, live demo, Congressional App Challenge 2026."
 
 ---
 

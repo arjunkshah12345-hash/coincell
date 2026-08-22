@@ -38,7 +38,7 @@ def build_protocol(
             ],
             reese_law_note=(
                 "Reese's Law (P.L. 117-171) mandated safer battery packaging after pediatric deaths. "
-                "CoinCell addresses the remaining diagnostic gap — packaging cannot help after ingestion."
+                "Haloscan addresses the remaining diagnostic gap — packaging cannot help after ingestion."
             ),
         )
 

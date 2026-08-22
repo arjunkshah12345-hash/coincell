@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CoinCell — Judge Guide</title>
+  <title>Haloscan — Judge Guide</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Instrument+Serif&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/styles.css" />
   <style>
@@ -28,14 +28,14 @@
 </head>
 <body>
   <div class="judge-page">
-    <a href="/" class="back">← Back to CoinCell demo</a>
-    <h1>CoinCell — Judge Verification Guide</h1>
+    <a href="/" class="back">← Back to Haloscan demo</a>
+    <h1>Haloscan — Judge Verification Guide</h1>
     <p class="judge-sub">Congressional App Challenge 2026 · Pediatric foreign-body X-ray decision support</p>
 
     <div class="links">
       <a href="/">Live demo</a>
-      <a href="https://github.com/arjunkshah12345-hash/coincell" target="_blank" rel="noopener">GitHub source</a>
-      <a href="https://www.kaggle.com/code/aks1321/coincell-train-cpu" target="_blank" rel="noopener">Kaggle training</a>
+      <a href="https://github.com/arjunkshah12345-hash/haloscan" target="_blank" rel="noopener">GitHub source</a>
+      <a href="https://www.kaggle.com/code/aks1321/haloscan-train-cpu" target="_blank" rel="noopener">Kaggle training</a>
     </div>
 
     <h2>90-second verification</h2>
@@ -55,7 +55,7 @@
       <div class="rubric-card">
         <strong>1. Quality of idea</strong>
         Reese's Law (P.L. 117-171) passed 409–2 and mandated child-proof battery packaging after pediatric deaths.
-        CoinCell addresses the remaining diagnostic gap — distinguishing batteries from coins on X-ray within the 2-hour esophageal emergency window.
+        Haloscan addresses the remaining diagnostic gap — distinguishing batteries from coins on X-ray within the 2-hour esophageal emergency window.
         Stacked coins mimic the double halo sign; this is a named, unsolved clinical failure mode.
       </div>
       <div class="rubric-card">
@@ -73,18 +73,18 @@
 
     <h2>Key source files</h2>
     <ul style="padding-left:1.25rem">
-      <li><code>coincell/halo_analyzer.py</code> — radial intensity profiling, Hough fallback</li>
-      <li><code>coincell/models.py</code> — DualViewNet AP+lateral fusion</li>
-      <li><code>coincell/inference.py</code> — ensemble + Grad-CAM + protocol</li>
-      <li><code>coincell/clinical.py</code> — CRITICAL/URGENT/ROUTINE engine</li>
-      <li><code>weights/coincell.pt</code> — CPU-trained model weights (bundled)</li>
+      <li><code>haloscan/halo_analyzer.py</code> — radial intensity profiling, Hough fallback</li>
+      <li><code>haloscan/models.py</code> — DualViewNet AP+lateral fusion</li>
+      <li><code>haloscan/inference.py</code> — ensemble + Grad-CAM + protocol</li>
+      <li><code>haloscan/clinical.py</code> — CRITICAL/URGENT/ROUTINE engine</li>
+      <li><code>weights/haloscan.pt</code> — CPU-trained model weights (bundled)</li>
       <li><code>tests/smoke_test.py</code> — automated verification</li>
     </ul>
 
     <h2>Congressional connection</h2>
     <p>
       H.R. 5313 (117th Congress) passed the House 409–2 and became P.L. 117-171 (Reese's Law).
-      CoinCell implements the diagnostic tool that Congress's prevention legislation did not include.
+      Haloscan implements the diagnostic tool that Congress's prevention legislation did not include.
       Baseline: Rostad et al., Emory SPR 2020 — 81% battery sensitivity, 88% overall accuracy; never deployed clinically.
     </p>
 

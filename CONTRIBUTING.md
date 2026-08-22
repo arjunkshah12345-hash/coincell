@@ -1,6 +1,6 @@
-# Contributing to CoinCell
+# Contributing to Haloscan
 
-Thanks for your interest! CoinCell is an open-source Congressional App Challenge project.
+Thanks for your interest! Haloscan is an open-source Congressional App Challenge project.
 
 ## Quick contributions
 
@@ -11,8 +11,8 @@ Thanks for your interest! CoinCell is an open-source Congressional App Challenge
 ## Development setup
 
 ```bash
-git clone https://github.com/arjunkshah12345-hash/coincell.git
-cd coincell
+git clone https://github.com/arjunkshah12345-hash/haloscan.git
+cd haloscan
 pip install -r requirements.txt
 python3 tests/smoke_test.py
 ./scripts/run.sh
@@ -33,4 +33,4 @@ python3 tests/smoke_test.py
 
 ## Clinical note
 
-CoinCell is decision support research software, not a medical device. Contributors must not claim FDA clearance or clinical validation beyond synthetic benchmarks.
+Haloscan is decision support research software, not a medical device. Contributors must not claim FDA clearance or clinical validation beyond synthetic benchmarks.

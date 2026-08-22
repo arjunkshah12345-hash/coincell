@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Deploy CoinCell to Hugging Face Spaces (runs from repo root)
+# Deploy Haloscan to Hugging Face Spaces (runs from repo root)
 # Usage: HF_TOKEN=hf_xxx ./scripts/deploy_hf.sh your-username
 set -euo pipefail
 USER="${1:?Usage: ./scripts/deploy_hf.sh HF_USERNAME}"
-SPACE="${USER}/coincell"
+SPACE="${USER}/haloscan"
 echo "Creating/updating Space: $SPACE"
 python3 -m pip install -q huggingface_hub
 python3 <<PY

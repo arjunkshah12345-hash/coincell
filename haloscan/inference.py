@@ -5,17 +5,17 @@ import time
 import torch
 import torch.nn.functional as F
 
-from coincell.clinical import build_protocol
-from coincell.gradcam import compute_gradcam, overlay_gradcam
-from coincell.halo_analyzer import analyze_halo, draw_overlay
-from coincell.models import CLASS_NAMES
-from coincell.preprocess import enhance_xray, load_image, to_rgb_tensor
-from coincell.result import CoinCellResult
-from coincell.visualize import numpy_to_b64, radial_profile_chart
-from coincell.weights import load_trained_models
+from haloscan.clinical import build_protocol
+from haloscan.gradcam import compute_gradcam, overlay_gradcam
+from haloscan.halo_analyzer import analyze_halo, draw_overlay
+from haloscan.models import CLASS_NAMES
+from haloscan.preprocess import enhance_xray, load_image, to_rgb_tensor
+from haloscan.result import HaloscanResult
+from haloscan.visualize import numpy_to_b64, radial_profile_chart
+from haloscan.weights import load_trained_models
 
 
-class CoinCellEngine:
+class HaloscanEngine:
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.single, self.dual = load_trained_models(self.device)
@@ -35,7 +35,7 @@ class CoinCellEngine:
         probs = F.softmax(logits, dim=1)[0].cpu().numpy()
         return {CLASS_NAMES[i]: float(probs[i]) for i in range(len(CLASS_NAMES))}
 
-    def analyze(self, ap_image, lateral_image=None) -> CoinCellResult:
+    def analyze(self, ap_image, lateral_image=None) -> HaloscanResult:
         t0 = time.perf_counter()
         ap_gray = enhance_xray(load_image(ap_image))
         ap_halo = analyze_halo(ap_gray, view="ap")
@@ -110,7 +110,7 @@ class CoinCellEngine:
 
         elapsed_ms = (time.perf_counter() - t0) * 1000
 
-        return CoinCellResult(
+        return HaloscanResult(
             prediction=prediction,
             confidence=float(confidence),
             battery_probability=float(bat_n),
@@ -131,11 +131,11 @@ class CoinCellEngine:
         )
 
 
-_engine: CoinCellEngine | None = None
+_engine: HaloscanEngine | None = None
 
 
-def get_engine() -> CoinCellEngine:
+def get_engine() -> HaloscanEngine:
     global _engine
     if _engine is None:
-        _engine = CoinCellEngine()
+        _engine = HaloscanEngine()
     return _engine

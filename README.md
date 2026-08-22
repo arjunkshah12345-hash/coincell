@@ -1,115 +1,132 @@
 <p align="center">
-  <strong>CoinCell</strong><br/>
-  <sub>AI decision support for the diagnostic gap after Reese's Law</sub>
+  <svg width="48" height="48" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="14" stroke="#ef4444" stroke-width="1.2" opacity="0.45"/>
+    <circle cx="16" cy="16" r="9" stroke="#ef4444" stroke-width="1.4" opacity="0.75"/>
+    <circle cx="16" cy="16" r="4" fill="#ef4444"/>
+  </svg>
+</p>
+
+<h1 align="center">haloscan</h1>
+<p align="center"><em>the double halo, decoded.</em></p>
+
+<p align="center">
+  <a href="https://haloscan.vercel.app">Live Demo</a> ·
+  <a href="https://haloscan.vercel.app/judges">Judge Guide</a> ·
+  <a href="https://www.kaggle.com/code/aks1321/coincell-train-cpu">Training</a>
 </p>
 
 <p align="center">
-  <a href="https://coincell.vercel.app/demo">Website & Demo</a> ·
-  <a href="https://coincell.vercel.app/judges">Judge Guide</a> ·
-  <a href="https://www.kaggle.com/code/aks1321/coincell-train-cpu">Kaggle Training</a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
-  <img src="https://img.shields.io/badge/python-3.10+-green.svg" alt="Python 3.10+" />
-  <img src="https://img.shields.io/badge/CAC-2026-red.svg" alt="Congressional App Challenge 2026" />
-  <img src="https://img.shields.io/badge/battery_sensitivity-100%25-success.svg" alt="100% battery sensitivity" />
+  <img src="https://img.shields.io/badge/CAC-2026-red?style=flat-square" alt="Congressional App Challenge" />
+  <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="MIT" />
+  <img src="https://img.shields.io/badge/python-3.10+-green?style=flat-square" alt="Python" />
+  <img src="https://img.shields.io/badge/battery_sensitivity-100%25-success?style=flat-square" alt="100% battery sensitivity" />
+  <img src="https://img.shields.io/badge/Reese's_Law-P.L._117--171-lightgrey?style=flat-square" alt="Reese's Law" />
 </p>
 
 ---
 
-## Why CoinCell exists
+**Haloscan** is open-source AI decision support that distinguishes **button batteries from coins** on pediatric X-rays — closing the diagnostic gap [Reese's Law](https://www.congress.gov/bill/117th-congress/house-bill/5313) left open.
 
-In 2022, Congress passed **Reese's Law** (P.L. 117-171) **409–2** — mandating child-proof battery packaging after pediatric deaths. Prevention was fixed. **Diagnosis wasn't.**
+Congress passed child-proof battery packaging **409–2**. When a disc already sits in a child's esophagus, clinicians still have **~2 hours**. Stacked coins **fake the double halo sign**. Emory's 2020 ML model hit 81% battery sensitivity and **never shipped**. Haloscan does.
 
-When a toddler swallows a disc-shaped object, clinicians must decide within the **2-hour esophageal emergency window** whether it's a **button battery** or a **coin**. On AP X-ray they look identical. **Stacked coins mimic the double halo sign** — the exact case where doctors miss batteries.
+<p align="center">
+  <a href="https://haloscan.vercel.app/demo"><strong>→ Try the live demo</strong></a>
+</p>
 
-A 2020 **Emory University** study reached **81% battery sensitivity** with ML — and **never shipped clinically**. CoinCell implements and deploys that missing tool.
+---
 
-| Metric | CoinCell | Emory 2020 baseline |
-|--------|----------|---------------------|
-| Battery sensitivity | **100%** | 81% |
-| Stacked-coin emergency catch | **65%** | — |
+## Why "Haloscan"
+
+Radiologists look for the **double halo** on AP films — bright outer rim, darker center, inner ring — to spot button batteries. **Haloscan** measures that signature with radial intensity profiling, fuses it with a dual-view neural network, and outputs a clinical protocol when the halo lies.
+
+---
+
+## Results
+
+| | Haloscan | Emory 2020 (Rostad et al.) |
+|---|:---:|:---:|
+| **Battery sensitivity** | **100%** | 81% |
+| **Stacked-coin emergency catch** | **65%** | — |
 | Coin sensitivity | 73% | 83% |
+| Overall accuracy (baseline) | — | 88% |
+
+*Synthetic holdout, n=40/class. See `weights/metrics.json`.*
 
 ---
 
-## Live demo
-
-**Website:** [coincell.vercel.app](https://coincell.vercel.app) — interactive demo, judge guide, architecture
-
-**Full app** (upload + PyTorch inference):
+## Quick start
 
 ```bash
-git clone https://github.com/arjunkshah12345-hash/coincell.git
-cd coincell
+git clone https://github.com/arjunkshah12345-hash/haloscan.git
+cd haloscan
 pip install -r requirements.txt
 ./scripts/run.sh
-# → http://localhost:7860
 ```
 
-Weights ship in `weights/coincell.pt` — no Hugging Face, no API keys, runs offline.
+Open **http://localhost:7860** — upload AP + lateral X-rays, get verdict + Grad-CAM + clinical report.
+
+Weights ship in `weights/haloscan.pt`. No API keys. Runs **offline**.
 
 ---
 
 ## Architecture
 
 ```
-AP X-ray  → CLAHE → Halo analyzer (radial intensity profile, Hough fallback)
-Lateral   → Step-off morphology detector
-Both      → DualViewNet (PyTorch) — AP + lateral fusion
-Ensemble  → CV (55%) + CNN (40%) + dual-view bonus
-Output    → Verdict + Grad-CAM + radial chart + clinical protocol + HTML report
+┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│  AP X-ray   │────▶│  Halo analyzer   │────▶│                 │
+│  (CLAHE)    │     │  radial profile  │     │   Ensemble      │
+└─────────────┘     └──────────────────┘     │   CV 55%        │
+┌─────────────┐     ┌──────────────────┐     │   CNN 40%       │──▶ Verdict
+│  Lateral    │────▶│  Step-off detect │────▶│   dual bonus    │    Grad-CAM
+└─────────────┘     └──────────────────┘     │                 │    Protocol
+                              │               └────────▲────────┘
+                              └──── DualViewNet ───────┘
+                                    (3× battery loss)
 ```
 
-**Stacked-coin hard case:** conservative AP-only heuristics + ambiguity flag → treat as battery until endoscopy rules out.
+<details>
+<summary><strong>Key modules</strong></summary>
 
-See [TECHNICAL.md](TECHNICAL.md) for implementation details.
+| File | Role |
+|------|------|
+| `haloscan/halo_analyzer.py` | Radial halo profiling, Hough fallback |
+| `haloscan/models.py` | DualViewNet — AP + lateral fusion |
+| `haloscan/inference.py` | Ensemble, Grad-CAM, stacked-coin heuristics |
+| `haloscan/clinical.py` | CRITICAL / URGENT / ROUTINE protocol engine |
+| `haloscan/report.py` | Printable HTML clinical reports |
+
+</details>
 
 ---
 
-## Project structure
+## Project layout
 
 ```
-coincell/
-├── coincell/           # Python ML + clinical engine
-│   ├── halo_analyzer.py
-│   ├── models.py       # DualViewNet
-│   ├── inference.py    # Ensemble + Grad-CAM
-│   └── clinical.py     # CRITICAL / URGENT / ROUTINE protocol
-├── api/                # FastAPI backend
-├── static/             # Clinical web UI
-├── website/            # Marketing site (Next.js → Vercel)
-├── weights/            # Bundled model weights
-├── kaggle/             # CPU training notebook
-├── scripts/
-│   ├── run.sh          # Start local app
-│   └── train_cpu.py    # Local training
-└── tests/smoke_test.py
+haloscan/          # Python ML + clinical engine
+api/               # FastAPI backend
+static/            # Full clinical web UI (upload + inference)
+website/           # Marketing site → Vercel
+weights/           # Bundled model weights (~3.5 MB)
+kaggle/            # CPU training notebook
+tests/             # Smoke tests
 ```
 
 ---
 
 ## Training
 
-**Kaggle CPU** (recommended): [coincell-train-cpu](https://www.kaggle.com/code/aks1321/coincell-train-cpu)
+**Kaggle CPU:** [coincell-train-cpu](https://www.kaggle.com/code/aks1321/coincell-train-cpu) *(legacy kernel name)*
 
 ```bash
 kaggle kernels push -p kaggle
-# Download coincell.pt from Output → weights/coincell.pt
+# Download haloscan.pt → weights/haloscan.pt
+python3 scripts/export_demo_assets.py   # refresh Vercel demo
 ```
 
-**Local CPU:**
+**Local:**
 
 ```bash
-COINCELL_N_PER_CLASS=100 COINCELL_EPOCHS=6 python3 scripts/train_cpu.py
-cp /tmp/coincell/coincell.pt weights/coincell.pt
-```
-
-Regenerate Vercel demo assets after retraining:
-
-```bash
-python3 scripts/export_demo_assets.py
+HALOSCAN_N_PER_CLASS=100 HALOSCAN_EPOCHS=6 python3 scripts/train_cpu.py
 ```
 
 ---
@@ -117,42 +134,37 @@ python3 scripts/export_demo_assets.py
 ## Development
 
 ```bash
-# Tests
-python3 tests/smoke_test.py
-
-# Benchmark
-python3 -m coincell.evaluate --n 40
-
-# Website (local)
-cd website && npm install && npm run dev
+python3 tests/smoke_test.py              # must pass
+python3 -m haloscan.evaluate --n 40     # benchmark
+cd website && npm run dev                # marketing site
 ```
 
 ---
 
 ## Congressional App Challenge 2026
 
-Built for the **Congressional App Challenge** — connecting federal legislation (Reese's Law) to an unsolved clinical problem with production-grade code.
+Built to connect **federal legislation** (Reese's Law, P.L. 117-171) to an unsolved clinical failure mode with production-grade code.
 
-- [SUBMISSION_FORM.md](SUBMISSION_FORM.md) — copy-paste submission answers
-- [VIDEO.md](VIDEO.md) — demo video shot list
-- [CHECKLIST.md](CHECKLIST.md) — pre-submit checklist
-- [WIN.md](WIN.md) — strategy notes
+| Resource | Link |
+|----------|------|
+| Live demo | https://haloscan.vercel.app/demo |
+| Judge guide | https://haloscan.vercel.app/judges |
+| Submission copy | [`SUBMISSION_FORM.md`](SUBMISSION_FORM.md) |
+| Video script | [`VIDEO.md`](VIDEO.md) |
 
 ---
 
 ## Disclaimer
 
-**Decision support / research demo only.** Not a medical device. Not FDA cleared. Suspected button battery ingestion → **call 911** · Poison Control **1-800-222-1222**.
+**Decision support / research only.** Not a medical device. Not FDA cleared.
+
+Suspected button battery ingestion → **911** · Poison Control **1-800-222-1222** · Battery Ingestion Hotline **202-625-3333**
 
 ---
 
 ## License
 
-[MIT](LICENSE) — open source, free to use and learn from.
+[MIT](LICENSE) — use it, learn from it, fork it.
 
----
-
-<p align="center">
-  <sub>Reese's Law fixed prevention. CoinCell fixes diagnosis.</sub><br/>
-  <sub>Built by <a href="https://arjunshah.xyz">Arjun Shah</a></sub>
-</p>
+<p align="center"><sub>Reese's Law fixed prevention. Haloscan fixes diagnosis.</sub><br/>
+<sub><a href="https://arjunshah.xyz">Arjun Shah</a> · Congressional App Challenge 2026</sub></p>

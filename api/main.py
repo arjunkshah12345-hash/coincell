@@ -14,11 +14,11 @@ from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
 
-from coincell.evaluate import evaluate_on_synthetic
-from coincell.inference import get_engine
-from coincell.report import generate_html_report
-from coincell.synthetic import generate_sample
-from coincell.visualize import numpy_to_b64
+from haloscan.evaluate import evaluate_on_synthetic
+from haloscan.inference import get_engine
+from haloscan.report import generate_html_report
+from haloscan.synthetic import generate_sample
+from haloscan.visualize import numpy_to_b64
 
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = ROOT / "static"
@@ -35,7 +35,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="CoinCell API", version="2.2.0", lifespan=lifespan)
+app = FastAPI(title="Haloscan API", version="2.2.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -96,7 +96,7 @@ async def root():
     index = STATIC / "index.html"
     if index.exists():
         return FileResponse(index)
-    return JSONResponse({"service": "CoinCell API", "docs": "/docs"})
+    return JSONResponse({"service": "Haloscan API", "docs": "/docs"})
 
 
 @app.post("/api/analyze")
@@ -123,7 +123,7 @@ async def report(
     lat_img = _read_upload(lateral)
     result = get_engine().analyze(ap_img, lat_img)
     html = generate_html_report(result)
-    return HTMLResponse(html, headers={"Content-Disposition": "attachment; filename=coincell-report.html"})
+    return HTMLResponse(html, headers={"Content-Disposition": "attachment; filename=haloscan-report.html"})
 
 
 @app.get("/api/demo/{case}")
@@ -147,7 +147,7 @@ async def demo_report(case: str):
     result = _run_demo(case)
     return HTMLResponse(
         generate_html_report(result),
-        headers={"Content-Disposition": f"attachment; filename=coincell-{case}-report.html"},
+        headers={"Content-Disposition": f"attachment; filename=haloscan-{case}-report.html"},
     )
 
 
@@ -213,7 +213,7 @@ async def health():
         "status": "ok",
         "version": "2.2.0",
         "model": "loaded",
-        "weights": "bundled" if (ROOT / "weights" / "coincell.pt").exists() else "custom",
+        "weights": "bundled" if (ROOT / "weights" / "haloscan.pt").exists() else "custom",
         "metrics": bundled is not None,
     }
 

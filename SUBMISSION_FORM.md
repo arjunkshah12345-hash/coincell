@@ -1,4 +1,4 @@
-# CoinCell — Congressional App Challenge Submission Form
+# Haloscan — Congressional App Challenge Submission Form
 ## Copy-paste ready · October 26, 2026 deadline (12 PM Eastern)
 
 Fill at: https://www.congressionalappchallenge.us/
@@ -7,7 +7,7 @@ Fill at: https://www.congressionalappchallenge.us/
 
 ### App Name (40 characters max)
 ```
-CoinCell
+Haloscan
 ```
 
 ### Short Description (~150 characters — check portal limit)
@@ -17,17 +17,17 @@ AI decision support that distinguishes button batteries from coins on pediatric 
 
 ### What is the purpose of your app? (one sentence)
 ```
-CoinCell helps emergency clinicians distinguish ingested button batteries from coins on pediatric X-rays within the 2-hour esophageal emergency window.
+Haloscan helps emergency clinicians distinguish ingested button batteries from coins on pediatric X-rays within the 2-hour esophageal emergency window.
 ```
 
 ### What inspired you to create this app?
 ```
-In 2022, Congress passed Reese's Law (P.L. 117-171) nearly unanimously after children died from swallowing button batteries — it mandated child-proof battery packaging. But the law didn't fix what happens in the ER when a child has already swallowed something. On X-ray, batteries and coins look identical, and stacked coins mimic the "double halo sign." A 2020 Emory University study achieved 88% accuracy with machine learning but never became a clinical tool. I built CoinCell to ship what Congress's prevention law couldn't: the diagnosis.
+In 2022, Congress passed Reese's Law (P.L. 117-171) nearly unanimously after children died from swallowing button batteries — it mandated child-proof battery packaging. But the law didn't fix what happens in the ER when a child has already swallowed something. On X-ray, batteries and coins look identical, and stacked coins mimic the "double halo sign." A 2020 Emory University study achieved 88% accuracy with machine learning but never became a clinical tool. I built Haloscan to ship what Congress's prevention law couldn't: the diagnosis.
 ```
 
 ### What is your app trying to accomplish?
 ```
-CoinCell gives ER teams and tele-radiology a web-based decision support tool that fuses computer-vision halo analysis with a dual-view neural network to classify disc-shaped foreign bodies on pediatric X-rays. When the halo is ambiguous — the exact case where stacked coins fool doctors — CoinCell flags "treat as battery" and displays a clinical protocol with the 2-hour endoscopy window, action checklist, and emergency hotlines. The goal is zero missed batteries, even at rural hospitals without 24/7 pediatric radiology.
+Haloscan gives ER teams and tele-radiology a web-based decision support tool that fuses computer-vision halo analysis with a dual-view neural network to classify disc-shaped foreign bodies on pediatric X-rays. When the halo is ambiguous — the exact case where stacked coins fool doctors — Haloscan flags "treat as battery" and displays a clinical protocol with the 2-hour endoscopy window, action checklist, and emergency hotlines. The goal is zero missed batteries, even at rural hospitals without 24/7 pediatric radiology.
 ```
 
 ### What technical/coding difficulty did you encounter, and how did you overcome it?
@@ -41,10 +41,10 @@ The core difficulty is stacked coins creating false "double halo" patterns on AP
 
 | Field | URL |
 |-------|-----|
-| **Live demo** | https://coincell.vercel.app/demo |
-| **Website** | https://coincell.vercel.app |
+| **Live demo** | https://haloscan.vercel.app/demo |
+| **Website** | https://haloscan.vercel.app |
 | **Training** | https://www.kaggle.com/code/aks1321/coincell-train-cpu |
-| **Source code** | https://github.com/arjunkshah12345-hash/coincell ✅ |
+| **Source code** | https://github.com/arjunkshah12345-hash/haloscan ✅ |
 | **Demo video** | YouTube unlisted/public link *(record using VIDEO.md)* |
 
 ---

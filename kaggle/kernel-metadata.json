@@ -1,7 +1,7 @@
 {
-  "id": "aks1321/coincell-train-cpu",
-  "title": "CoinCell Train CPU",
-  "code_file": "coincell_train.ipynb",
+  "id": "aks1321/haloscan-train-cpu",
+  "title": "Haloscan Train CPU",
+  "code_file": "haloscan_train.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,

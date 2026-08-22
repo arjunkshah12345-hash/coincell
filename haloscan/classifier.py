@@ -9,8 +9,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 
-from coincell.models import CLASS_NAMES, CoinCellNet, DualViewNet
-from coincell.synthetic import LABEL_NAMES, augment, generate_sample
+from haloscan.models import CLASS_NAMES, HaloscanNet, DualViewNet
+from haloscan.synthetic import LABEL_NAMES, augment, generate_sample
 
 
 def _to_tensor(gray: np.ndarray, size: int = 224) -> torch.Tensor:
@@ -51,7 +51,7 @@ def train_models(
     epochs: int = 10,
     batch_size: int = 32,
     device: str | None = None,
-) -> tuple[CoinCellNet, DualViewNet]:
+) -> tuple[HaloscanNet, DualViewNet]:
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     ap_x, lat_x, y = build_dataset(dual=True)
 
@@ -59,7 +59,7 @@ def train_models(
     criterion = nn.CrossEntropyLoss(weight=weights)
 
     # Single-view model
-    single = CoinCellNet().to(device)
+    single = HaloscanNet().to(device)
     opt_s = torch.optim.AdamW(single.parameters(), lr=2e-3, weight_decay=1e-4)
     ds = TensorDataset(ap_x, y)
     loader = DataLoader(ds, batch_size=batch_size, shuffle=True)
@@ -94,7 +94,7 @@ def train_models(
     return single, dual
 
 
-def save_models(single: CoinCellNet, dual: DualViewNet, path: str | Path) -> None:
+def save_models(single: HaloscanNet, dual: DualViewNet, path: str | Path) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(
@@ -108,10 +108,10 @@ def save_models(single: CoinCellNet, dual: DualViewNet, path: str | Path) -> Non
     )
 
 
-def load_models(path: str | Path, device: str | None = None) -> tuple[CoinCellNet, DualViewNet]:
+def load_models(path: str | Path, device: str | None = None) -> tuple[HaloscanNet, DualViewNet]:
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     ckpt = torch.load(path, map_location=device, weights_only=False)
-    single = CoinCellNet().to(device)
+    single = HaloscanNet().to(device)
     dual = DualViewNet().to(device)
     if "single" in ckpt:
         single.load_state_dict(ckpt["single"])

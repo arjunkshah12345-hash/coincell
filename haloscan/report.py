@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from coincell.result import CoinCellResult
+from haloscan.result import HaloscanResult
 
 
-def generate_html_report(result: CoinCellResult) -> str:
+def generate_html_report(result: HaloscanResult) -> str:
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     p = result.protocol
     actions = "".join(f"<li>{a}</li>" for a in p.actions)
@@ -19,7 +19,7 @@ def generate_html_report(result: CoinCellResult) -> str:
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CoinCell Report — {result.prediction}</title>
+  <title>Haloscan Report — {result.prediction}</title>
   <style>
     :root {{ --red: #dc2626; --muted: #64748b; --border: #e2e8f0; }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -70,7 +70,7 @@ def generate_html_report(result: CoinCellResult) -> str:
 </head>
 <body>
   <div class="header">
-    <h1>CoinCell Analysis Report</h1>
+    <h1>Haloscan Analysis Report</h1>
     <p class="meta">Generated {ts} · Inference {result.inference_ms:.0f} ms · Decision support only — not a medical device</p>
   </div>
 
@@ -113,7 +113,7 @@ def generate_html_report(result: CoinCellResult) -> str:
   </div>
 
   <p class="disclaimer">
-    CoinCell is research decision support tied to Reese's Law (P.L. 117-171) diagnostic gap analysis.
+    Haloscan is research decision support tied to Reese's Law (P.L. 117-171) diagnostic gap analysis.
     This report does not constitute medical advice. Suspected button battery ingestion requires immediate emergency care.<br/>
     Poison Control: 1-800-222-1222 · National Battery Ingestion Hotline: 202-625-3333
   </p>
