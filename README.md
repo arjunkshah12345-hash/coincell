@@ -136,6 +136,7 @@ HALOSCAN_N_PER_CLASS=100 HALOSCAN_EPOCHS=6 python3 scripts/train_cpu.py
 ```bash
 python3 tests/smoke_test.py              # must pass
 python3 -m haloscan.evaluate --n 40     # benchmark
+python3 scripts/export_figures.py       # regenerate site figures (X-ray, Grad-CAM, etc.)
 cd website && npm run dev                # marketing site
 ```
 
