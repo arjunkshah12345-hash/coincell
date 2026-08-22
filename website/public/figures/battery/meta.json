@@ -1,0 +1,10 @@
+{
+  "id": "battery",
+  "caption": "Button battery (AP + lateral)",
+  "prediction": "BATTERY",
+  "battery_probability": 0.633,
+  "coin_probability": 0.367,
+  "emergency": true,
+  "urgency": "CRITICAL",
+  "inference_ms": 521.5
+}

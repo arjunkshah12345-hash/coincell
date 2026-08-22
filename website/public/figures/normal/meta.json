@@ -1,0 +1,10 @@
+{
+  "id": "normal",
+  "caption": "Normal study (no foreign body)",
+  "prediction": "COIN",
+  "battery_probability": 0.163,
+  "coin_probability": 0.837,
+  "emergency": false,
+  "urgency": "ROUTINE",
+  "inference_ms": 220.6
+}

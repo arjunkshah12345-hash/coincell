@@ -1,0 +1,10 @@
+{
+  "id": "coin",
+  "caption": "Single coin (AP)",
+  "prediction": "COIN",
+  "battery_probability": 0.167,
+  "coin_probability": 0.833,
+  "emergency": false,
+  "urgency": "ROUTINE",
+  "inference_ms": 206.7
+}

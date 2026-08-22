@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "haloscan — the double halo, decoded",
+  title: "Haloscan — Pediatric X-ray Decision Support",
   description:
-    "Open-source AI that distinguishes button batteries from coins on pediatric X-rays. Built for the Congressional App Challenge — closing the diagnostic gap after Reese's Law.",
+    "Research-grade AI that distinguishes button batteries from coins on pediatric chest X-rays. Built for the Congressional App Challenge.",
   openGraph: {
-    title: "haloscan",
-    description: "The double halo, decoded. AI decision support after Reese's Law (P.L. 117-171).",
+    title: "Haloscan",
+    description: "AI decision support for button battery vs. coin ingestion on pediatric X-rays.",
     type: "website",
     url: "https://haloscan.ideatr.dev",
   },
@@ -15,14 +15,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.theme==='dark'||(!localStorage.theme&&matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}`,
-          }}
-        />
       </head>
       <body>{children}</body>
     </html>

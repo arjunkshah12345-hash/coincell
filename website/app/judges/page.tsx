@@ -6,74 +6,81 @@ export default function JudgesPage() {
     <div className="page">
       <Nav current="judges" />
 
-      <header className="hero">
-        <h1>judge guide</h1>
-        <p className="hero-lead">
-          90-second verification for congressional app challenge 2026. haloscan addresses the diagnostic
-          gap reese&apos;s law (p.l. 117-171) did not cover.
+      <header className="doc-header">
+        <h1>Judge Verification Guide</h1>
+        <p className="doc-subtitle">Congressional App Challenge 2026 — Haloscan</p>
+        <p className="doc-meta">
+          This page describes how to verify Haloscan in approximately 90 seconds. The project addresses the
+          diagnostic gap left open by Reese&apos;s Law (P.L. 117-171): Congress mandated safer battery packaging,
+          but emergency departments still struggle to distinguish batteries from coins on X-ray.
         </p>
       </header>
 
       <section>
-        <p className="label">verify in 90 seconds</p>
-        <ol className="muted" style={{ paddingLeft: 18 }}>
-          <li style={{ marginBottom: 8 }}>
-            open <Link href="/scan">/scan</Link> → press <strong>1</strong> (battery) → CRITICAL protocol
+        <h2>1. Quick Verification Protocol</h2>
+        <ol className="research">
+          <li>
+            Open the{" "}
+            <Link href="/scan">Clinical Scanner</Link> and press key <strong>1</strong> (button battery case).
+            Confirm a CRITICAL protocol appears with the two-hour esophageal window.
           </li>
-          <li style={{ marginBottom: 8 }}>
-            press <strong>3</strong> (stacked coins) → emergency flag despite coin mimic
+          <li>
+            Press key <strong>3</strong> (stacked coins — the hard false-halo case). Confirm the system flags a
+            battery emergency despite coin-like appearance.
           </li>
-          <li style={{ marginBottom: 8 }}>scroll to grad-cam + radial profile explainability</li>
-          <li style={{ marginBottom: 8 }}>
-            clone repo → <code>python3 tests/smoke_test.py</code> passes
+          <li>Scroll to Grad-CAM, detection overlay, and radial intensity profile figures.</li>
+          <li>
+            Clone the repository and run <code>python3 tests/smoke_test.py</code> — all checks should pass.
           </li>
-          <li>read architecture in github README + TECHNICAL.md</li>
+          <li>Review architecture details in README.md and TECHNICAL.md on GitHub.</li>
         </ol>
       </section>
 
       <section>
-        <p className="label">rubric mapping</p>
-        <div className="timeline">
-          <div className="timeline-item">
-            <h3>idea</h3>
-            <div>
-              <p>
-                reese&apos;s law fixed prevention; haloscan fixes diagnosis. named clinical failure mode
-                (stacked coins / false halo). 2-hour esophageal emergency window.
-              </p>
-            </div>
-          </div>
-          <div className="timeline-item">
-            <h3>implementation</h3>
-            <div>
-              <p>
-                live demo, dual-view upload in full app, ensemble breakdown, grad-cam, clinical protocol,
-                html reports, responsive ui, vercel site + offline-capable backend.
-              </p>
-            </div>
-          </div>
-          <div className="timeline-item">
-            <h3>coding</h3>
-            <div>
-              <p>
-                opencv halo physics + dualviewnet pytorch ensemble. kaggle cpu training. smoke tests.
-                open source mit. beats emory 2020 baseline on battery sensitivity.
-              </p>
-            </div>
-          </div>
-        </div>
+        <h2>2. Rubric Mapping</h2>
+
+        <h3>2.1 Problem &amp; Idea</h3>
+        <p>
+          Reese&apos;s Law fixed prevention; Haloscan addresses diagnosis. The app targets a named clinical
+          failure mode (stacked coins mimicking the double halo sign) and the two-hour esophageal emergency
+          window for lodged button batteries.
+        </p>
+
+        <h3>2.2 Implementation</h3>
+        <p>
+          Live web demo with real PyTorch inference (not pre-recorded JSON). Dual-view upload, ensemble
+          probability breakdown, Grad-CAM explainability, printable HTML clinical reports, and deployment on
+          Vercel (frontend) plus Render (API).
+        </p>
+
+        <h3>2.3 Technical Depth</h3>
+        <p>
+          OpenCV radial halo physics combined with DualViewNet fusion. Kaggle CPU training with bundled weights.
+          Automated smoke tests. Open-source MIT license. Battery sensitivity exceeds the published Emory 2020
+          machine-learning baseline on synthetic holdout data.
+        </p>
       </section>
 
       <section>
-        <p className="label">key files</p>
+        <h2>4. Published Figures on the Home Page</h2>
+        <p>
+          The landing page includes Figures 1–3 generated by the same inference pipeline as the live scanner:
+          AP radiographs, detection overlays, Grad-CAM attention maps, and radial intensity profiles. These
+          are exported via <code>python3 scripts/export_figures.py</code> and stored in{" "}
+          <code>website/public/figures/</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Key Repository Files</h2>
         <ul className="list">
           {[
-            ["haloscan/halo_analyzer.py", "radial halo profiling"],
-            ["haloscan/models.py", "DualViewNet fusion"],
-            ["haloscan/inference.py", "ensemble + grad-cam"],
-            ["haloscan/clinical.py", "protocol engine"],
-            ["weights/haloscan.pt", "bundled model weights"],
-            ["tests/smoke_test.py", "automated verification"],
+            ["haloscan/halo_analyzer.py", "Radial halo profiling"],
+            ["haloscan/models.py", "DualViewNet architecture"],
+            ["haloscan/inference.py", "Ensemble engine and Grad-CAM"],
+            ["haloscan/clinical.py", "Protocol engine (CRITICAL / URGENT / ROUTINE)"],
+            ["weights/haloscan.pt", "Bundled model weights (~3.5 MB)"],
+            ["tests/smoke_test.py", "Automated verification"],
           ].map(([file, desc]) => (
             <li key={file}>
               <a
@@ -93,8 +100,8 @@ export default function JudgesPage() {
       </section>
 
       <footer>
-        <span>not a medical device · no patient data</span>
-        <Link href="/">← home</Link>
+        <span>Not a medical device · No patient data stored</span>
+        <Link href="/">← Home</Link>
       </footer>
     </div>
   );

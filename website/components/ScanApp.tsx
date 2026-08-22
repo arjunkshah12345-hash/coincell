@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Logo } from "@/components/Logo";
 
 type Halo = {
   halo_score: number;
@@ -41,10 +40,10 @@ type Result = {
 };
 
 const CASES = [
-  { id: "battery", title: "Button battery", sub: "AP + lateral", key: "1" },
-  { id: "coin", title: "Single coin", sub: "AP only", key: "2" },
-  { id: "stacked", title: "Stacked coins", sub: "Hard case", key: "3" },
-  { id: "normal", title: "Normal", sub: "No FB", key: "4" },
+  { id: "battery", title: "Button battery", sub: "AP + lateral · Case 1", key: "1", fig: "/figures/battery/ap.png" },
+  { id: "coin", title: "Single coin", sub: "AP only · Case 2", key: "2", fig: "/figures/coin/ap.png" },
+  { id: "stacked", title: "Stacked coins", sub: "False halo · Case 3", key: "3", fig: "/figures/stacked/ap.png" },
+  { id: "normal", title: "Normal study", sub: "No foreign body · Case 4", key: "4", fig: "/figures/normal/ap.png" },
 ];
 
 export function ScanApp() {
@@ -56,6 +55,7 @@ export function ScanApp() {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [apiLive, setApiLive] = useState<boolean | null>(null);
+  const [activeCase, setActiveCase] = useState<string | null>(null);
   const lastDemo = useRef<string | null>(null);
 
   useEffect(() => {
@@ -84,10 +84,12 @@ export function ScanApp() {
       setLatPreview(url);
     }
     lastDemo.current = null;
+    setActiveCase(null);
   };
 
   const runDemo = useCallback(async (id: string) => {
     setLoading(true);
+    setActiveCase(id);
     lastDemo.current = id;
     try {
       const [res, prev] = await Promise.all([
@@ -169,28 +171,52 @@ export function ScanApp() {
     <div className="scan-root">
       <header className="scan-header">
         <div className="scan-brand">
-          <Logo size={22} />
           <div>
-            <h1>Haloscan</h1>
-            <span>live ensemble inference · pytorch + opencv</span>
+            <h1>Haloscan Clinical Scanner</h1>
+            <span>Live ensemble inference · PyTorch + OpenCV</span>
           </div>
         </div>
         <div className="scan-nav">
           <span className={`status-pill ${apiLive ? "live" : ""}`}>
-            {apiLive === null ? "connecting…" : apiLive ? "● api live" : "○ api offline"}
+            {apiLive === null ? "Connecting…" : apiLive ? "API online" : "API offline"}
           </span>
-          <Link href="/">home</Link>
-          <Link href="/judges">judges</Link>
+          <Link href="/">Home</Link>
+          <Link href="/judges">Judge Guide</Link>
           <a href="https://github.com/arjunkshah12345-hash/haloscan" target="_blank" rel="noopener noreferrer">
-            github
+            Source
           </a>
         </div>
       </header>
 
+      <div className="example-strip">
+        <h2>Reference cases — select to run live inference (keys 1–4)</h2>
+        <div className="example-grid">
+          {CASES.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              className={`example-card ${activeCase === c.id ? "active" : ""}`}
+              onClick={() => runDemo(c.id)}
+            >
+              <img src={c.fig} alt={c.title} />
+              <div className="example-card-body">
+                <strong>
+                  {c.key}. {c.title}
+                </strong>
+                <span>{c.sub}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="scan-layout">
         <section className="scan-panel">
-          <h2>Analyze X-ray</h2>
-          <p className="scan-lead">Upload AP (required) + lateral (recommended). Real PyTorch inference — not pre-recorded.</p>
+          <h2>1. Upload Radiographs</h2>
+          <p className="scan-lead">
+            Upload an AP (anteroposterior) view, required. Add a lateral view when available. Analysis runs on
+            the server using the full Haloscan ensemble—not pre-recorded results.
+          </p>
 
           <label
             className="dropzone"
@@ -203,8 +229,8 @@ export function ScanApp() {
             <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0], "ap")} />
             {!apPreview ? (
               <>
-                <strong>AP (frontal) view</strong>
-                <span style={{ color: "var(--muted)", fontSize: "0.8rem" }}>Click or drag</span>
+                <strong>AP (frontal) radiograph</strong>
+                <span style={{ color: "var(--muted)", fontSize: "15px" }}>Click or drag to upload</span>
               </>
             ) : (
               <img src={apPreview} alt="AP" />
@@ -222,8 +248,8 @@ export function ScanApp() {
             <input type="file" accept="image/*" onChange={(e) => e.target.files?.[0] && onFile(e.target.files[0], "lat")} />
             {!latPreview ? (
               <>
-                <strong>Lateral view</strong>
-                <span style={{ color: "var(--muted)", fontSize: "0.8rem" }}>Optional</span>
+                <strong>Lateral radiograph</strong>
+                <span style={{ color: "var(--muted)", fontSize: "15px" }}>Optional</span>
               </>
             ) : (
               <img src={latPreview} alt="Lateral" />
@@ -231,15 +257,20 @@ export function ScanApp() {
           </label>
 
           <button className="btn-analyze" disabled={!apFile || loading} onClick={analyze}>
-            Analyze X-ray
+            Run Analysis
           </button>
 
-          <p className="scan-lead" style={{ marginTop: "1rem", marginBottom: "0.35rem" }}>
-            Quick cases (keys 1–4)
+          <p className="scan-lead" style={{ marginTop: "1.25rem", marginBottom: "0.5rem" }}>
+            Reference cases (keyboard shortcuts 1–4)
           </p>
           <div className="case-grid">
             {CASES.map((c) => (
-              <button key={c.id} type="button" className="case-btn" onClick={() => runDemo(c.id)}>
+              <button
+                key={c.id}
+                type="button"
+                className={`case-btn ${activeCase === c.id ? "on" : ""}`}
+                onClick={() => runDemo(c.id)}
+              >
                 <strong>
                   {c.key}. {c.title}
                 </strong>
@@ -258,7 +289,11 @@ export function ScanApp() {
                   {(r.confidence * 100).toFixed(1)}% confidence · {r.inference_ms.toFixed(0)} ms · {r.protocol.urgency}
                 </div>
               </div>
-              {r.emergency && <div className="emergency-strip">Treat as battery emergency until endoscopy rules out</div>}
+              {r.emergency && (
+                <div className="emergency-strip">
+                  Treat as battery emergency until endoscopy excludes esophageal lodgement
+                </div>
+              )}
 
               <div className="prob-row">
                 <span>Battery</span>
@@ -276,7 +311,7 @@ export function ScanApp() {
               </div>
 
               <div className="ensemble">
-                <strong>Ensemble</strong>
+                <strong>Ensemble breakdown</strong>
                 <div className="ensemble-grid">
                   <div>
                     CV {(r.cv_probs.battery * 100).toFixed(0)}%
@@ -299,7 +334,7 @@ export function ScanApp() {
                 </div>
               </div>
 
-              <p style={{ color: "var(--muted)", fontSize: "0.85rem", lineHeight: 1.6 }}>{r.explanation}</p>
+              <p style={{ color: "var(--secondary)", fontSize: "16px", lineHeight: 1.65 }}>{r.explanation}</p>
 
               <div className="img-grid">
                 <figure>
@@ -317,19 +352,19 @@ export function ScanApp() {
               </div>
 
               <div className="protocol">
-                <h3 style={{ color: r.protocol.color }}>{r.protocol.urgency} — Clinical protocol</h3>
-                <p style={{ color: "var(--amber)", fontSize: "0.85rem" }}>{r.protocol.time_window}</p>
+                <h3 style={{ color: r.protocol.color }}>{r.protocol.urgency} — Clinical Protocol</h3>
+                <p style={{ color: "var(--critical)", fontSize: "16px", fontWeight: 700 }}>{r.protocol.time_window}</p>
                 <ul>
                   {r.protocol.actions.map((a) => (
                     <li key={a}>{a}</li>
                   ))}
                 </ul>
                 {r.protocol.contacts.map((c) => (
-                  <p key={c} style={{ color: "var(--muted)", fontSize: "0.8rem" }}>
+                  <p key={c} style={{ color: "var(--muted)", fontSize: "15px" }}>
                     {c}
                   </p>
                 ))}
-                <p style={{ color: "var(--muted)", fontSize: "0.85rem", fontStyle: "italic", marginTop: "0.75rem" }}>
+                <p style={{ color: "var(--muted)", fontSize: "15px", fontStyle: "italic", marginTop: "12px" }}>
                   {r.protocol.reese_law_note}
                 </p>
               </div>
@@ -357,19 +392,19 @@ export function ScanApp() {
         </section>
 
         <aside className="scan-panel">
-          <h2>Live pipeline</h2>
+          <h2>Analysis Pipeline</h2>
           <p className="scan-lead">
-            Every analysis runs the full Haloscan engine on the server — OpenCV halo profiling, DualViewNet fusion,
-            Grad-CAM, and clinical protocol generation.
+            Each request executes the full Haloscan engine on the server: OpenCV halo profiling, DualViewNet
+            fusion, Grad-CAM explainability, and clinical protocol generation.
           </p>
-          <ul style={{ color: "var(--muted)", fontSize: "0.85rem", paddingLeft: "1.1rem", lineHeight: 1.7 }}>
-            <li>100% battery sensitivity vs 81% Emory baseline</li>
-            <li>Stacked-coin conservative heuristics</li>
-            <li>No patient data stored</li>
-            <li>Reese&apos;s Law (P.L. 117-171) context</li>
+          <ul className="scan-sidebar-list">
+            <li>100% battery sensitivity vs. 81% Emory 2020 baseline</li>
+            <li>Conservative handling of stacked-coin false halos</li>
+            <li>No patient data stored or transmitted beyond analysis</li>
+            <li>Context: Reese&apos;s Law (P.L. 117-171)</li>
           </ul>
-          <p className="scan-lead" style={{ marginTop: "1rem", fontSize: "0.75rem" }}>
-            ⚠ Decision support only — not a medical device
+          <p className="scan-lead" style={{ marginTop: "16px", fontSize: "14px" }}>
+            Decision support only — not a medical device.
           </p>
         </aside>
       </div>

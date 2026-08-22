@@ -1,0 +1,42 @@
+[
+  {
+    "id": "battery",
+    "caption": "Button battery (AP + lateral)",
+    "prediction": "BATTERY",
+    "battery_probability": 0.633,
+    "coin_probability": 0.367,
+    "emergency": true,
+    "urgency": "CRITICAL",
+    "inference_ms": 521.5
+  },
+  {
+    "id": "coin",
+    "caption": "Single coin (AP)",
+    "prediction": "COIN",
+    "battery_probability": 0.167,
+    "coin_probability": 0.833,
+    "emergency": false,
+    "urgency": "ROUTINE",
+    "inference_ms": 206.7
+  },
+  {
+    "id": "stacked",
+    "caption": "Stacked coins \u2014 false halo case",
+    "prediction": "BATTERY",
+    "battery_probability": 0.54,
+    "coin_probability": 0.46,
+    "emergency": true,
+    "urgency": "CRITICAL",
+    "inference_ms": 244.3
+  },
+  {
+    "id": "normal",
+    "caption": "Normal study (no foreign body)",
+    "prediction": "COIN",
+    "battery_probability": 0.163,
+    "coin_probability": 0.837,
+    "emergency": false,
+    "urgency": "ROUTINE",
+    "inference_ms": 220.6
+  }
+]
